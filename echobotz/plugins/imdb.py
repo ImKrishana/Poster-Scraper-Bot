@@ -287,7 +287,7 @@ async def _imdb_callback(client, query):
         target_msg = message.reply_to_message
         if imdb.get("poster"):
             try:
-                await EchoBot.send_photo(
+                await EchoBot.bot.send_photo(
                     chat_id=target_msg.chat.id,
                     photo=imdb["poster"],
                     caption=cap,
