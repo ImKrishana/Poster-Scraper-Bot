@@ -160,3 +160,68 @@ async def _bpinfo(cmd_name, target_url):
     except Exception:
         return None, "Invalid URL."
     return await srv.fetch(target_url)
+
+def _bylinks(links):
+    if not isinstance(links, dict) or not links:
+        return "╰╴ No direct links found."
+
+    grouped = any("|" in str(k) for k in links)
+    out = []
+
+    if not grouped:
+        items = [
+            (str(k).strip() or "Link", v.strip())
+            for k, v in links.items()
+            if isinstance(v, str) and v.strip().startswith(("http://", "https://"))
+        ]
+        for i, (k, v) in enumerate(items):
+            out.append(
+                f'{"╰╴" if i == len(items)-1 else "╞╴"} <b>{k}:</b> <a href="{v}">Click Here</a>'
+            )
+        return "\n".join(out) if out else "╰╴ No direct links found."
+
+    groups = {}
+    for k, v in links.items():
+        if not isinstance(v, str):
+            continue
+        u = v.strip()
+        if not u.startswith(("http://", "https://")):
+            continue
+        a, b = str(k).split("|", 1)
+        groups.setdefault(a.strip(), []).append((b.strip(), u))
+
+    for g, items in groups.items():
+        out.append(f"\n<b>{g}</b>")
+        for i, (k, v) in enumerate(items):
+            out.append(
+                f'{"╰╴" if i == len(items)-1 else "╞╴"} <b>{k}:</b> <a href="{v}">Click Here</a>'
+            )
+
+    return "\n".join(out).strip()
+
+def _pack_html(results, page=1, per_page=10):
+    total = len(results)
+    max_page = (total - 1) // per_page + 1
+    page = max(1, min(page, max_page))
+
+    start = (page - 1) * per_page
+    end = min(total, page * per_page)
+
+    out = []
+    for i, item in enumerate(results[start:end], start=1 + start):
+        name = item.get("file_name") or "File"
+        sz = item.get("file_size") or "N/A"
+        out.append(f"<b>{i}. {name}</b> <code>({sz})</code>")
+
+        links = item.get("links") or []
+        for li in links:
+            typ = li.get("type") or "Link"
+            url = li.get("url")
+            if not isinstance(url, str) or not url.startswith(("http://", "https://")):
+                continue
+            out.append(f'   ╞ <b>{typ}</b>: <a href="{url}">Click Here</a>')
+        out.append("")
+
+    txt = "\n".join(out).strip()
+    nav = f"<b>Page: {page}/{max_page}</b> | <b>Total Files: {total}</b>"
+    return txt, nav, page, max_page
