@@ -13,7 +13,7 @@ class EchoBypass:
 
     async def fetch(self, url):
         api_url = self.endpoint if self.method == "POST" else f"{self.endpoint}{quote_plus(url)}"
-        LOGGER.info(f"EchoBypass: [{self.key}] API URL: {api_url}")
+        LOGGER.info(f"[{self.key}] API URL: {api_url}")
 
         try:
             if self.method == "POST":
@@ -29,36 +29,36 @@ class EchoBypass:
                     api_url,
                     timeout=30
                 )
-            LOGGER.info(f"EchoBypass: [{self.key}] Status Code: {resp.status_code}")
+            LOGGER.info(f"[{self.key}] Status Code: {resp.status_code}")
         except Exception as e:
-            LOGGER.error(f"EchoBypass: [{self.key}] HTTP error: {e}", exc_info=True)
+            LOGGER.error(f"[{self.key}] HTTP error: {e}", exc_info=True)
             return None, "Failed to reach bypass service."
 
         if resp.status_code != 200:
             LOGGER.error(
-                f"EchoBypass: [{self.key}] API error {resp.status_code}: {resp.text[:200]}"
+                f"[{self.key}] API error {resp.status_code}: {resp.text[:200]}"
             )
             return None, "Bypass service error."
 
         try:
             data = resp.json()
-            LOGGER.info(f"EchoBypass: [{self.key}] JSON parsed successfully")
+            LOGGER.info(f"[{self.key}] JSON parsed successfully")
         except Exception as e:
-            LOGGER.error(f"EchoBypass: [{self.key}] JSON parse error: {e}")
+            LOGGER.error(f"[{self.key}] JSON parse error: {e}")
             return None, "Invalid response from bypass service."
 
         data = self._unwrap(data)
-        LOGGER.info(f"EchoBypass: [{self.key}] Data unwrapped: {type(data).__name__}")
+        LOGGER.info(f"[{self.key}] Data unwrapped: {type(data).__name__}")
 
         if not isinstance(data, dict):
-            LOGGER.error(f"EchoBypass: [{self.key}] Invalid JSON structure")
+            LOGGER.error(f"[{self.key}] Invalid JSON structure")
             return None, "Unexpected response from bypass service."
 
         if data.get("success") is False:
-            LOGGER.error(f"EchoBypass: [{self.key}] API failure: {data.get('message')}")
+            LOGGER.error(f"[{self.key}] API failure: {data.get('message')}")
             return None, data.get("message") or "Bypass failed."
 
-        LOGGER.info(f"EchoBypass: [{self.key}] Normalizing response")
+        LOGGER.info(f"[{self.key}] Normalizing response")
         return self.norm(data)
 
     def _unwrap(self, data):
@@ -116,7 +116,7 @@ class EchoBypass:
         links = _xlnk(root)
 
         if not links:
-            LOGGER.error(f"EchoBypass: [{self.key}] No direct links found after normalization")
+            LOGGER.error(f"[{self.key}] No direct links found after normalization")
             return None, "No direct links found."
 
         return {
@@ -170,8 +170,10 @@ def _clean(s):
     return str(s).replace("_", " ").replace("Link", "").strip().title() or "Link"
 
 EchoByRegistry = {
+    # By: HgBots
     "gdflix": EchoBypass("gdflix", "https://hgbots.vercel.app/bypaas/gd.php?url="),
     "hubdrive": EchoBypass("hubdrive", "https://hgbots.vercel.app/bypaas/hubdrive.php?url="),
+    # By: PBX1 
     "extraflix": EchoBypass("extraflix", "https://pbx1botapi.vercel.app/api/extraflix?url="),
     "hubcloud": EchoBypass("hubcloud", "https://pbx1botapi.vercel.app/api/hubcloud?url="),
     "vcloud": EchoBypass("vcloud", "https://pbx1botapi.vercel.app/api/vcloud?url="),
