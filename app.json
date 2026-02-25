@@ -1,7 +1,7 @@
 {
   "name": "Poster Bot",
   "description": "Telegram bot that fetches Posters from multiple OTT platforms & Bypass direct links from cloud sites.",
-  "repository": "https://github.com/the-piro/pstr",
+  "repository": "https://github.com/ImKrishana/Poster-Scraper-Bot",
   "stack": "container",
   "env": {
     "BOT_TOKEN": {
