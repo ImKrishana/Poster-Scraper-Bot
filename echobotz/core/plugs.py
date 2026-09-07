@@ -8,7 +8,6 @@ from ..plugins.cmds import _strt, _ping
 from ..plugins.service import (
     _authorize, _unauthorize, _log_cmd, _log_cb, _restart, _restart_cb
 )
-from ..plugins.imdb import _imdb_search, _imdb_callback
 from ..plugins.anilist import _anime, _anime_cb
 from ..plugins.bypass import _bypass_cmd, _bypass_hc_pack_cb
 from ..plugins.tmdb import _p
@@ -85,21 +84,6 @@ def add_plugs():
             _broadcast,
             filters.command(BotCommands.BroadcastCommand, case_sensitive=True)
             & CustomFilters.sudo,
-        )
-    )
-
-    EchoBot.bot.add_handler(
-        MessageHandler(
-            _imdb_search,
-            filters.command(BotCommands.ImdbCommand, case_sensitive=True)
-            & CustomFilters.authorized,
-        )
-    )
-
-    EchoBot.bot.add_handler(
-        CallbackQueryHandler(
-            _imdb_callback,
-            filters.regex(r"^imdb ") & CustomFilters.authorized,
         )
     )
 
