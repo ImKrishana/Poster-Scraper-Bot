@@ -362,7 +362,7 @@ This bot is developed strictly for **educational and research purposes only**.
 ---
 
 [![License](https://img.shields.io/github/license/ImKrishana/Poster-Scraper-Bot)](https://github.com/ImKrishana/Poster-Scraper-Bot/blob/main/LICENSE)
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?logo=telegram&logoColor=white)](https://t.me/NxMirror)
+[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?logo=telegram&logoColor=white)](https://t.me/LeechBots)
 
 If you like this project, don't forget to give it a Star !
 
