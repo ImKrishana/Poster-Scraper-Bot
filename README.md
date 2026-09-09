@@ -1,4 +1,4 @@
-Powerful telegram bot that scrape Posters from multiple OTT platforms & Bypass direct download links from cloud sites.
+**Powerful telegram bot that scrape Posters from multiple OTT platforms & Bypass direct download links from cloud sites.**
 
 ## Supported Platforms
 
