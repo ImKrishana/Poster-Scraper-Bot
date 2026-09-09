@@ -11,7 +11,7 @@ BASIC_HELP_DICT = {
 def get_bot_commands():
     static_commands = {
     "Start": "Start the bot",
-    "Poster": "Fetch poster links from an OTT or YouTube URL",
+    "Poster": "Fetch poster links from an OTT URL",
     "Stats": "Get bot statistics",
     "Help": "Detailed help usage",
     "Ping": "Ping Bot to test Response Speed",
