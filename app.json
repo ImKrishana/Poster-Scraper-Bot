@@ -8,11 +8,11 @@
       "description": "Telegram Bot Token from @BotFather",
       "required": true
     },
-    "API_ID": {
+    "TELEGRAM_API": {
       "description": "Get this from my.telegram.org",
       "required": true
     },
-    "API_HASH": {
+    "TELEGRAM_HASH": {
       "description": "Get this from my.telegram.org",
       "required": true
     },
@@ -20,46 +20,19 @@
       "description": "MongoDB URI",
       "required": true
     },
-    "DATABASE_NAME": {
-      "description": "MongoDB DB name",
-      "required": false,
-      "value": "ebotz"
-    },
     "OWNER_ID": {
       "description": "Your Telegram numeric user id",
       "required": true
     },
-    "SUDO_USERS": {
-      "description": "Space separated user IDs (optional)",
-      "required": false
-    },
-    "AUTH_CHATS": {
-      "description": "Space separated chat IDs allowed (optional)",
-      "required": false
-    },
-    "PUBLIC_MODE": {
-      "description": "true/false, allow everyone to use bot",
-      "required": false,
-      "value": "True"
-    },
-    "TIMEZONE": {
-      "description": "Timezone e.g. Asia/Kolkata",
-      "required": false,
-      "value": "Asia/Kolkata"
-    },
     "UPSTREAM_REPO": {
-      "description": "Git repo for updates",
+      "description": "Git repository URL used for automatic updates",
       "required": false,
-      "value": "https://github.com/the-piro/pstr"
+      "value": "https://github.com/ImKrishana/Poster-Scraper-Bot"
     },
     "UPSTREAM_BRANCH": {
-      "description": "Branch for updates",
+      "description": "Repository branch used for automatic updates",
       "required": false,
       "value": "main"
-    },
-    "TMDB_ACCESS_TOKEN": {
-      "description": "TMDB Token is optional bot will use third party proxy (https://tmdbapi.the-zake.workers.dev) if u don't want to set TMDB token",
-      "required": false
     }
   }
 }

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: poster-bot
+    name: base
     env: docker
     region: Frankfurt
     plan: free
@@ -9,21 +9,15 @@ services:
     envVars:
       - key: BOT_TOKEN
         sync: false
-      - key: API_ID
+      - key: TELEGRAM_API
         sync: false
-      - key: API_HASH
+      - key: TELEGRAM_HASH
         sync: false
       - key: DATABASE_URL
         sync: false
-      - key: DATABASE_NAME
-        value: ebotz
       - key: OWNER_ID
         sync: false
       - key: UPSTREAM_REPO
         sync: false
       - key: UPSTREAM_BRANCH
         sync: false
-      - key: PORT
-        value: "80"
-      - key: WEB_SERVER
-        value: "true" 

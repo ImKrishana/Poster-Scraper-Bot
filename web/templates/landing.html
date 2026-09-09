@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WZML-K</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+  --bg: #03050d;
+  --accent1: #7b2fff;
+  --accent2: #00e5ff;
+  --accent3: #ff2d78;
+  --border: rgba(123,47,255,0.3);
+  --text: #e0e0ff;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(123,47,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,47,255,0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index:0;
+  pointer-events:none;
+}
+
+.orb {
+  position:fixed; border-radius:50%;
+  filter:blur(80px); opacity:.25; z-index:0; pointer-events:none;
+  animation: drift 10s ease-in-out infinite alternate;
+}
+.orb1 { width:420px;height:420px; background:var(--accent1); top:-100px;left:-100px; }
+.orb2 { width:350px;height:350px; background:var(--accent2); bottom:-80px;right:-80px; animation-delay:-4s; }
+.orb3 { width:280px;height:280px; background:var(--accent3); top:40%;left:50%; transform:translate(-50%,-50%); animation-delay:-7s; }
+
+@keyframes drift {
+  from { transform: translate(0,0); }
+  to   { transform: translate(30px,30px); }
+}
+
+.wrap {
+  position:relative; z-index:1;
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; min-height:100vh; padding:2rem 1rem;
+}
+
+.card {
+  background: rgba(10,8,30,0.75);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:3rem 3.5rem;
+  max-width:700px; width:100%;
+  backdrop-filter:blur(24px);
+  box-shadow: 0 0 60px rgba(123,47,255,0.15), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  animation: fadeUp .8s ease both;
+  text-align:center;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.avatar-wrap {
+  position:relative; width:120px; height:120px; margin:0 auto 1.5rem;
+}
+.avatar-ring {
+  position:absolute; inset:-6px; border-radius:50%;
+  background: conic-gradient(var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+  animation: spin 4s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.avatar-ring::after {
+  content:''; position:absolute; inset:3px;
+  border-radius:50%; background:var(--bg);
+}
+.avatar-placeholder {
+  position:relative; z-index:1;
+  width:100%; height:100%; border-radius:50%;
+  background:linear-gradient(135deg,var(--accent1),var(--accent3));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:900;
+  color:#fff;
+}
+
+.badge {
+  display:inline-flex; align-items:center; gap:.4rem;
+  background:rgba(123,47,255,0.15);
+  border:1px solid rgba(123,47,255,0.4);
+  border-radius:20px; padding:.25rem .9rem;
+  font-size:.8rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--accent2); margin-bottom:1rem;
+}
+.badge i { font-size:.7rem; }
+
+h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:2.6rem; font-weight:900; letter-spacing:3px;
+  background:linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  margin-bottom:.5rem;
+}
+
+.subtitle {
+  font-size:1.05rem; opacity:.7; margin-bottom:.4rem; letter-spacing:.5px;
+}
+
+.desc {
+  font-size:1rem; opacity:.55; margin-bottom:2.2rem;
+  line-height:1.7; max-width:480px; margin-inline:auto;
+}
+
+.divider {
+  height:1px; width:100%;
+  background:linear-gradient(90deg, transparent, var(--accent1), var(--accent2), transparent);
+  margin-bottom:2rem; opacity:.4;
+}
+
+.btns {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:.9rem; margin-bottom:2rem;
+}
+
+.btn {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.4rem; padding:1rem .8rem;
+  border-radius:12px; text-decoration:none;
+  font-family:'Rajdhani',sans-serif; font-weight:600; font-size:.9rem;
+  letter-spacing:1px; text-transform:uppercase;
+  border:1px solid transparent;
+  transition:all .3s ease; position:relative; overflow:hidden;
+}
+.btn i { font-size:1.4rem; }
+.btn::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.06),transparent);
+  opacity:0; transition:.3s;
+}
+.btn:hover::before { opacity:1; }
+.btn:hover { transform:translateY(-4px); }
+
+.btn-tg {
+  background:rgba(0,136,204,0.1);
+  border-color:rgba(0,136,204,0.35);
+  color:#29b6f6;
+}
+.btn-tg:hover { box-shadow:0 8px 30px rgba(0,136,204,0.3); border-color:#29b6f6; }
+
+.btn-gh {
+  background:rgba(255,255,255,0.05);
+  border-color:rgba(255,255,255,0.15);
+  color:#e0e0e0;
+}
+.btn-gh:hover { box-shadow:0 8px 30px rgba(255,255,255,0.1); border-color:#e0e0e0; }
+
+.btn-sup {
+  background:rgba(0,229,255,0.08);
+  border-color:rgba(0,229,255,0.25);
+  color:var(--accent2);
+}
+.btn-sup:hover { box-shadow:0 8px 30px rgba(0,229,255,0.2); border-color:var(--accent2); }
+
+.stats {
+  display:flex; justify-content:center; gap:2.5rem;
+  background:rgba(123,47,255,0.06);
+  border:1px solid rgba(123,47,255,0.15);
+  border-radius:12px; padding:1rem;
+  margin-bottom:2rem;
+}
+.stat { text-align:center; }
+.stat-num {
+  font-family:'Orbitron',sans-serif; font-size:1.3rem; font-weight:700;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.stat-label { font-size:.75rem; opacity:.5; text-transform:uppercase; letter-spacing:1px; }
+
+.footer { font-size:.8rem; opacity:.35; letter-spacing:1px; }
+.footer span { color:var(--accent3); }
+
+.live { display:inline-flex; align-items:center; gap:.4rem; }
+.dot {
+  width:7px; height:7px; border-radius:50%;
+  background:#00e676; animation: pulse 1.5s ease infinite;
+}
+@keyframes pulse {
+  0%,100%{ box-shadow:0 0 0 0 rgba(0,230,118,.6); }
+  50%{ box-shadow:0 0 0 6px rgba(0,230,118,0); }
+}
+
+@media(max-width:560px){
+  .card { padding:2rem 1.5rem; }
+  h1 { font-size:2rem; }
+  .btns { grid-template-columns:1fr 1fr; }
+  .btns .btn:last-child { grid-column:1/-1; }
+  .stats { gap:1.5rem; }
+}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar-placeholder">WK</div>
+    </div>
+
+    <div class="badge"><i class="fas fa-circle-dot"></i> <span class="live"><span class="dot"></span> Active</span></div>
+
+    <h1>WZML-K</h1>
+    <p class="subtitle">A Simplified Fork of <span style="color:var(--accent2);font-weight:700;">WZML-X</span></p>
+    <p class="desc">A lightweight, stripped-down version of WZML-X — built for simplicity.</p>
+
+    <div class="divider"></div>
+
+    <div class="btns">
+      <a href="https://t.me/LeechBots" class="btn btn-tg" target="_blank">
+        <i class="fab fa-telegram-plane"></i> Channel
+      </a>
+      <a href="https://t.me/NxTalks" class="btn btn-sup" target="_blank">
+        <i class="fas fa-headset"></i> Support
+      </a>
+      <a href="https://github.com/ImKrishana" class="btn btn-gh" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Uptime</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Fast</div>
+        <div class="stat-label">Response</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Free</div>
+        <div class="stat-label">To Use</div>
+      </div>
+    </div>
+
+    <p class="footer">&copy; 2025 <span>WZML-K</span> · All rights reserved</p>
+  </div>
+</div>
+</body>
+</html>
