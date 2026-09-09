@@ -1,14 +1,6 @@
 services:
-  poster-bot:
+  app:
     build: .
-    container_name: poster-bot
+    command: bash start.sh
     restart: on-failure
-    env_file:
-      - config.env
-    volumes:
-      - ./logs:/app/logs
-    networks:
-      - bot-network
-networks:
-  bot-network:
-    driver: bridge
+    network_mode: "host"

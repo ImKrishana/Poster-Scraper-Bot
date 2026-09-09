@@ -1,5 +1,6 @@
-FROM thezake/thezake:main
-WORKDIR /app
+FROM thezake/test:v1
+WORKDIR /usr/src/app
+COPY requirements.txt .
+RUN uv pip install --python /zakevenv/bin/python --no-cache-dir -r requirements.txt
 COPY . .
-RUN chmod +x start.sh
-CMD ["bash", "start.sh"]
+ENTRYPOINT ["bash", "start.sh"]

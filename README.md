@@ -3,110 +3,48 @@ Powerful telegram bot that scrape Posters from multiple OTT platforms & Bypass d
 ## Supported Platforms
 
 <details>
-<summary><strong>DDL Bypass Sites</strong></summary>
-
-- Gdflix
-- Vegamovies 
-- Extraflix 
-- Hubdrive
-- Hubcloud
-- Hubcdn
-- Transfer-it
-- Driveleech
-- Neolinks
-- GDRex
-- PixelCDN
-- ExtraLink
-- LuxDrive
-- Nexdrive
-- Hblinks 
-
-</details>
-
-<details>
 <summary><strong>OTT & Streaming Platforms</strong></summary>
 
-- Prime Video
 - Crunchyroll
-- Netflix
-- ZEE5
-- Apple TV+
-- Airtel Xstream
-- Sun NXT
-- Aha Video
-- iQIYI
-- WeTV
-- ShemarooMe
 - BookMyShow
-- Plex
-- Addatimes
-- Stage
-- Mx Player 
-
-</details>
-
-<details>
-<summary><strong>Social Media Platforms</strong></summary>
-
+- Netflix
+- iQIYI
+- MX Player
+- Amazon Prime Video
+- Airtel Xstream
+- ZEE5
+- Ultra
 - YouTube
-- Instagram
-- Facebook
-- TikTok
+- Viki
+- Youku
+- WeTV
+- Hulu
+- TicketNew
+- SonyLIV
+- ShemarooMe
+- Apple TV+
+- Chaupal
+- Aha
+- VivaMax
+- Plex TV
+- Atrangii
+- Sun NXT
+- Playflix
+- Lionsgate Play
+- Eros Now
+- Hungama
+- Hoichoi
+- Jojo
+- Ultra Jhakaas
+- MUBI
+- Saina Play
+- Addatimes
+- AaoNXT
+- Viu
+- Dangal
+- Tata Play
+- Tubi
 
-</details>
-
-## Commands
-<details>
-<summary><strong>Click Here </strong></summary>
-
-  ```
-/poster - Scrape any movie/show poster
-/imdb - Search movie/series on IMDb
-/anime - Search Anime on Anilist
-/crunchyroll - Scrape Crunchyroll anime poster from name or URL
-/vegamovies - Bypass Vegamovies DDL Links
-/gdflix - Bypass GDFlix links to direct links
-/extraflix - Bypass ExtraFlix links to direct links
-/hubcloud - Bypass HubCloud links to direct links
-/hubdrive - Bypass Hubdrive links to direct links
-/transfer_it - Bypass Transfer.it links to direct links
-/hubcdn - Bypass HubCDN links to direct links
-/driveleech - Bypass DriveLeech links to direct links
-/neo - Bypass NeoLinks links to direct links
-/gdrex - Bypass GDRex links to direct links
-/pixelcdn - Bypass PixelCDN links to direct links
-/extralink - Bypass ExtraLink links to direct links
-/luxdrive - Bypass LuxDrive links to direct links
-/nexdrive - Bypass NexDrive links to direct links
-/hblinks -Bypass HBLinks to direct links
-/overlap - Overlay a logo on a poster
-/prime - Prime Video poster
-/netflix - Netflix poster
-/zee5 - ZEE5 poster
-/appletv - Apple TV+ poster
-/airtel - Airtel Xstream poster
-/sunnxt - Sun NXT poster
-/aha - Aha Video poster
-/iqiyi - iQIYI poster
-/wetv - WeTV poster
-/shemaroo - ShemarooMe poster
-/bms - BookMyShow poster
-/plex - Plex TV poster
-/adda - Addatimes poster
-/stage - Stage poster
-/mxplayer - Mx Player Poster 
-/youtube - YouTube thumbnail
-/instagram - Instagram thumbnail
-/facebook - Facebook thumbnail
-/tiktok - TikTok thumbnail
-/start - Start the bot
-/ping - Check Bot Ping
-/authorize - Authorize a user or chat[Admins Only]
-/unauthorize - Unauthorize a user or chat[Admins Only]
-/log - Get bot logs[Admins Only]
-/restart - Restart the bot[Admins Only]
-/broadcast - Broadcast message to users[Admins Only]
-```
 </details>
 
 ## Variables 
@@ -120,24 +58,29 @@ Powerful telegram bot that scrape Posters from multiple OTT platforms & Bypass d
 - **`BOT_TOKEN`** - Get this from [@BotFather](https://t.me/BotFather)
 - **`DATABASE_URL`** - MongoDB database URL
 - **`OWNER_ID`** - Your Telegram user ID
-- **`UPSTREAM_REPO`** - Your forked repository URL for autu update
-- **`UPSTREAM_BRANCH`** - Repository branch name 
-
+- **`UPSTREAM_REPO`** - Your forked repository URL for auto update
+- **`UPSTREAM_BRANCH`** - Repository branch name
+  
 ### Optional Variables
 
-- **`DATABASE_NAME`** - MongoDB database name 
-- **`SUDO_USERS`** - Space-separated list of user IDs with sudo access
-- **`AUTH_CHATS`** - Space-separated list of authorized chat IDs
-- **`WEB_SERVER`** - Set True if deploying on koyeb/render else False
-- **`PING_URL`** - Your koyeb/render's Base url
-- **`PING_TIME`** - Intervel time in seconds
-- **`PUBLIC_MODE`** - Set to `True` for public access, `False` for private use only
-- **`TIMEZONE`** - Timezone for the bot 
-- **`TMDB_ACCESS_TOKEN`** - TMDB API token (optional, uses proxy if not set)
-- **`OTT_TEMPLATE`** - Format for OTT platform poster results
-- **`IMDB_TEMPLATE`** - Format for IMDb search results
-- **`BYPASS_TEMPLATE`** - Format for bypass link results
-- **`POSER_TEMPLATE`** - Format for TMDB poster results
+- **`AUTHORIZED_CHATS`** - Comma-separated Telegram chat IDs where the bot is authorized to work
+- **`AUTHOR_NAME`** - Name displayed as the author of generated content
+- **`AUTHOR_URL`** - Telegram or website URL associated with the author
+- **`BASE_URL`** - Base URL used for web access or external services
+- **`BASE_URL_PORT`** - Port used by the base URL/web server
+- **`CMD_SUFFIX`** - Suffix added to bot commands
+- **`DEFAULT_LANG`** - Default language used by the bot
+- **`POSTER_API_URL`** - API URL used for generating or fetching posters
+- **`POSTER_API_TOKEN`** - Authentication token for the poster API
+- **`PROTECTED_API`** - Shortener Bypass API endpoint or URL
+- **`PUBLIC_MODE`** - Enables or disables public mode for the bot
+- **`SUDO_USERS`** - Telegram user IDs with sudo/admin-level access
+- **`SET_COMMANDS`** - Automatically sets bot commands in Telegram
+- **`TG_PROXY`** - Telegram proxy configuration
+- **`TIMEZONE`** - Timezone used by the bot for date and time operations
+- **`UPDATE_PKGS`** - Automatically updates required Python packages
+- **`VERIFY_TIMEOUT`** - Timeout duration for user verification
+
 
 </details>
 
@@ -405,7 +348,7 @@ Delete broadcast messages from all users.
 
 Live bot can be found here
 
-**Bot:** [@PostersDLBot](https://t.me/+rurOI-O9ciozYjVl)
+**Demo Bot:** [@PostersProBot](https://t.me/PostersProBot)
 
 U can test all features and commands to see how it works!
 
@@ -423,4 +366,4 @@ This bot is developed strictly for **educational and research purposes only**.
 
 If you like this project, don't forget to give it a Star !
 
-**Developer:** [@PosterDLBot](https://t.me/+rurOI-O9ciozYjVl)
+**Developer:** [The Zake](https://t.me/TheZake)
