@@ -1,0 +1,38 @@
+{
+  "name": "Poster Bot",
+  "description": "Telegram bot that fetches Posters from multiple OTT platforms & Bypass direct links from cloud sites.",
+  "repository": "https://github.com/ImKrishana/Poster-Scraper-Bot",
+  "stack": "container",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Telegram Bot Token from @BotFather",
+      "required": true
+    },
+    "TELEGRAM_API": {
+      "description": "Get this from my.telegram.org",
+      "required": true
+    },
+    "TELEGRAM_HASH": {
+      "description": "Get this from my.telegram.org",
+      "required": true
+    },
+    "DATABASE_URL": {
+      "description": "MongoDB URI",
+      "required": true
+    },
+    "OWNER_ID": {
+      "description": "Your Telegram numeric user id",
+      "required": true
+    },
+    "UPSTREAM_REPO": {
+      "description": "Git repository URL used for automatic updates",
+      "required": false,
+      "value": "https://github.com/ImKrishana/Poster-Scraper-Bot"
+    },
+    "UPSTREAM_BRANCH": {
+      "description": "Repository branch used for automatic updates",
+      "required": false,
+      "value": "main"
+    }
+  }
+}
