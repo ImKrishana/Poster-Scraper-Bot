@@ -10,7 +10,7 @@
 <details>
   <summary><strong>Render (One-Click Deploy)</strong></summary>
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ImKrishana/Poster-Scraper-Bot&branch=deploy)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ImKrishana/Poster-Scraper-Bot&branch=main)
 
 </details>
 
