@@ -373,3 +373,15 @@ This bot is developed strictly for **educational and research purposes only**.
 If you like this project, don't forget to give it a Star !
 
 **Developer:** [The Zake](https://t.me/TheZake)
+
+## 💖 Donate 
+
+If you find this project useful and would like to support its development, you can make a donation:
+
+### 💰 Binance
+**Binance Pay ID:** `1227156725`
+
+### 🇮🇳 UPI
+**UPI ID:** `ftkrishana@fam`
+
+Every contribution is greatly appreciated and helps keep the project maintained and improved. ❤️
