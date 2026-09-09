@@ -5,5 +5,5 @@ START_MSG = """
 
 • Completely Free & Open Source.
 """
-START_BUTTON1 = "Repo"
-START_BUTTON2 = "Updates"
+START_BUTTON1 = "✺ Source Code"
+START_BUTTON2 = "⭐ Developer"
