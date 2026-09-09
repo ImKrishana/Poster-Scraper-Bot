@@ -1,5 +1,4 @@
-FROM thezake/thezake:main
-WORKDIR /app
+FROM thezake/test:v1
+WORKDIR /usr/src/app
 COPY . .
-RUN chmod +x start.sh
-CMD ["bash", "start.sh"]
+ENTRYPOINT ["bash", "start.sh"]
