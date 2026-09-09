@@ -89,16 +89,14 @@ Powerful telegram bot that scrape Posters from multiple OTT platforms & Bypass d
 <details>
   <summary><strong>Heroku (One-Click Deploy)</strong></summary>
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ImKrishana/Poster-Scraper-Bot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ImKrishana/Poster-Scraper-Bot/tree/deploy)
 
 </details>
 
 <details>
   <summary><strong>Render (One-Click Deploy)</strong></summary>
-  
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](
-https://render.com/deploy?repo=https://github.com/ImKrishana/Poster-Scraper-Bot&branch=deploy
-)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ImKrishana/Poster-Scraper-Bot&branch=deploy)
 
 </details>
 
@@ -106,6 +104,7 @@ https://render.com/deploy?repo=https://github.com/ImKrishana/Poster-Scraper-Bot&
   <summary><strong>VPS/Locally</strong></summary>
 
 ### Prerequisites
+
 Before starting, ensure you have:
 - Docker installed ([Installation Guide](https://docs.docker.com/engine/install/))
 - Docker Compose installed ([Installation Guide](https://docs.docker.com/compose/install/))
@@ -119,36 +118,38 @@ Before starting, ensure you have:
    ```
 
 2. **Setup Configuration File**
-   
-   Create `config.env` file:
+
+   Create `config.py` file:
    ```bash
-   nano config.env
+   nano config.py
    ```
-   
-   Add the required variables (replace with your actual values):
-   ```env
-   API_ID=your_api_id
-   API_HASH=your_api_hash
-   BOT_TOKEN=your_bot_token
-   DATABASE_URL=your_mongodb_url
-   OWNER_ID=your_telegram_user_id
+
+   Add the required variables:
+   ```python
+   BOT_TOKEN = "your_bot_token"
+   TELEGRAM_API = 12345678
+   TELEGRAM_HASH = "your_telegram_api_hash"
+   DATABASE_URL = "your_mongodb_url"
+   OWNER_ID = 123456789
+   UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
+   UPSTREAM_BRANCH = "main"
    ```
-   
-   Save and exit (`Ctrl + X`, then `Y`, then `Enter`)
+
+   Save and exit (`Ctrl + X`, then `Y`, then `Enter`).
 
 3. **Start the Bot**
    ```bash
    docker-compose up -d
    ```
-   
+
    The bot will start in detached mode (background).
 
 4. **Verify Bot is Running**
    ```bash
    docker-compose ps
    ```
-   
-   You should see `poster-bot` with status "Up".
+
+   You should see the bot container with status `Up`.
 
 ### Xtras
 
@@ -156,7 +157,8 @@ Before starting, ensure you have:
 ```bash
 docker-compose logs -f
 ```
-Press `Ctrl + C` to exit logs
+
+Press `Ctrl + C` to exit logs.
 
 **Stop the Bot:**
 ```bash
@@ -178,6 +180,7 @@ docker-compose up -d --build
 ```bash
 docker-compose down -v
 ```
+
 </details>
 
 <details>
@@ -188,24 +191,27 @@ docker-compose down -v
    heroku login
    ```
 
-2. **Clone Repository & switch to deploy branch**
+2. **Clone Repository & Switch to Deploy Branch**
    ```bash
-   git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb && cd psb && git checkout deploy
+   git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb
+   cd psb
+   git checkout deploy
    ```
 
-3. **Create config.env file**
+3. **Create `config.py` File**
    ```bash
-   nano config.env
+   nano config.py
    ```
-   Add required variables:
-   ```env
-   API_ID=your_api_id
-   API_HASH=your_api_hash
-   BOT_TOKEN=your_bot_token
-   DATABASE_URL=your_database_url
-   OWNER_ID=your_owner_id
-   UPSTREAM_REPO=https://github.com/ImKrishana/Poster-Scraper-Bot
-   UPSTREAM_BRANCH=main
+
+   Add the required variables:
+   ```python
+   BOT_TOKEN = "your_bot_token"
+   TELEGRAM_API = 12345678
+   TELEGRAM_HASH = "your_telegram_api_hash"
+   DATABASE_URL = "your_mongodb_url"
+   OWNER_ID = 123456789
+   UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
+   UPSTREAM_BRANCH = "main"
    ```
 
 4. **Commit Changes**
@@ -224,7 +230,7 @@ docker-compose down -v
    heroku git:remote -a YOUR-APP-NAME
    ```
 
-7. **Create Container**
+7. **Set Container Stack**
    ```bash
    heroku stack:set container
    ```
