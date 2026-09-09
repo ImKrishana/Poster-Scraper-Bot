@@ -9,7 +9,7 @@
 
 <details>
   <summary><strong>Render (One-Click Deploy)</strong></summary>
-  
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ImKrishana/Poster-Scraper-Bot&branch=deploy)
 
 </details>
@@ -29,111 +29,134 @@ Before starting, ensure you have:
    ```bash
    git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb
    cd psb
+   ```
 
-2. Setup Configuration File
-   
-   Create "config.py" file:
-   
+2. **Setup Configuration File**
+
+   Create `config.py` file:
+   ```bash
    nano config.py
-   
-   Add the required variables:
-   
-   BOT_TOKEN = "your_bot_token"
-TELEGRAM_API = 12345678
-TELEGRAM_HASH = "your_telegram_api_hash"
-DATABASE_URL = "your_mongodb_url"
-OWNER_ID = 123456789
-UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
-UPSTREAM_BRANCH = "main"
-   
-   Save and exit ("Ctrl + X", then "Y", then "Enter").
+   ```
 
-3. Start the Bot
-   
+   Add the required variables:
+   ```python
+   BOT_TOKEN = "your_bot_token"
+   TELEGRAM_API = 12345678
+   TELEGRAM_HASH = "your_telegram_api_hash"
+   DATABASE_URL = "your_mongodb_url"
+   OWNER_ID = 123456789
+   UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
+   UPSTREAM_BRANCH = "main"
+   ```
+
+   Save and exit (`Ctrl + X`, then `Y`, then `Enter`).
+
+3. **Start the Bot**
+   ```bash
    docker-compose up -d
-   
+   ```
+
    The bot will start in detached mode (background).
 
-4. Verify Bot is Running
-   
+4. **Verify Bot is Running**
+   ```bash
    docker-compose ps
-   
-   You should see the bot container with status "Up".
+   ```
 
-Xtras
+   You should see the bot container with status `Up`.
 
-View Live Logs:
+### Xtras
 
+**View Live Logs:**
+```bash
 docker-compose logs -f
+```
 
-Press "Ctrl + C" to exit logs.
+Press `Ctrl + C` to exit logs.
 
-Stop the Bot:
-
+**Stop the Bot:**
+```bash
 docker-compose down
+```
 
-Restart the Bot:
-
+**Restart the Bot:**
+```bash
 docker-compose restart
+```
 
-Update and Restart:
-
+**Update and Restart:**
+```bash
 git pull
 docker-compose up -d --build
+```
 
-Stop and Remove Everything:
-
+**Stop and Remove Everything:**
+```bash
 docker-compose down -v
-
-</details><details>
-  <summary><strong>Heroku CLI</strong></summary>1. Login to Heroku
-   
-   heroku login
-
-2. Clone Repository & Switch to Deploy Branch
-   
-   git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb
-cd psb
-git checkout deploy
-
-3. Create "config.py" File
-   
-   nano config.py
-   
-   Add the required variables:
-   
-   BOT_TOKEN = "your_bot_token"
-TELEGRAM_API = 12345678
-TELEGRAM_HASH = "your_telegram_api_hash"
-DATABASE_URL = "your_mongodb_url"
-OWNER_ID = 123456789
-UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
-UPSTREAM_BRANCH = "main"
-
-4. Commit Changes
-   
-   git add . -f
-git commit -m "echo"
-
-5. Create Heroku App
-   
-   heroku create YOUR-APP-NAME
-
-6. Add Remote
-   
-   heroku git:remote -a YOUR-APP-NAME
-
-7. Set Container Stack
-   
-   heroku stack:set container
-
-8. Deploy
-   
-   git push heroku deploy:main -f
-
-9. Check Logs
-   
-   heroku logs --tail
+```
 
 </details>
-```
+
+<details>
+  <summary><strong>Heroku CLI</strong></summary>
+
+1. **Login to Heroku**
+   ```bash
+   heroku login
+   ```
+
+2. **Clone Repository & Switch to Deploy Branch**
+   ```bash
+   git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb
+   cd psb
+   git checkout deploy
+   ```
+
+3. **Create `config.py` File**
+   ```bash
+   nano config.py
+   ```
+
+   Add the required variables:
+   ```python
+   BOT_TOKEN = "your_bot_token"
+   TELEGRAM_API = 12345678
+   TELEGRAM_HASH = "your_telegram_api_hash"
+   DATABASE_URL = "your_mongodb_url"
+   OWNER_ID = 123456789
+   UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
+   UPSTREAM_BRANCH = "main"
+   ```
+
+4. **Commit Changes**
+   ```bash
+   git add . -f
+   git commit -m "echo"
+   ```
+
+5. **Create Heroku App**
+   ```bash
+   heroku create YOUR-APP-NAME
+   ```
+
+6. **Add Remote**
+   ```bash
+   heroku git:remote -a YOUR-APP-NAME
+   ```
+
+7. **Set Container Stack**
+   ```bash
+   heroku stack:set container
+   ```
+
+8. **Deploy**
+   ```bash
+   git push heroku deploy:main -f
+   ```
+
+9. **Check Logs**
+   ```bash
+   heroku logs --tail
+   ```
+
+</details>
