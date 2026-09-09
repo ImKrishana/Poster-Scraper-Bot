@@ -160,3 +160,15 @@ docker-compose down -v
    ```
 
 </details>
+
+## 💖 Donate 
+
+If you find this project useful and would like to support its development, you can make a donation:
+
+### 💰 Binance
+**Binance Pay ID:** `1227156725`
+
+### 🇮🇳 UPI
+**UPI ID:** `ftkrishana@fam`
+
+Every contribution is greatly appreciated and helps keep the project maintained and improved. ❤️
