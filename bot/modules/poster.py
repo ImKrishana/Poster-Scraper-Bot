@@ -116,7 +116,7 @@ def format_result(data: dict, platform: str, url: str) -> str:
     year = escape(str(data.get("year") or "N/A"))
 
     header = [
-        f"<b>📺 Source:</b> {PLATFORM_NAMES.get(platform, platform)}",
+        f"<b>✺ Source:</b> {PLATFORM_NAMES.get(platform, platform)}",
         f"<b>🎬 Title:</b> {title}",
         f"<b>📅 Year:</b> {year}",
         "",
@@ -164,7 +164,7 @@ def format_result(data: dict, platform: str, url: str) -> str:
             if poster_lines
             else "• No posters found."
         )
-        + "\n\n<blockquote>Bot By ➤ @NxTalks</blockquote>"
+        + "\n\n<blockquote>Bot By ➤ @TheZake</blockquote>"
     )
 
 
@@ -173,8 +173,8 @@ async def poster(_, message):
     if len(message.command) < 2:
         return await send_message(
             message,
-            "<b>Usage:</b> "
-            "<code>/poster https://example.com/content</code>\n\n"
+            "<b>New ?:</b> "
+            "<code>/poster https://example.com</code>\n\n"
             "Send a supported OTT url after <code>/poster</code>.",
         )
 
