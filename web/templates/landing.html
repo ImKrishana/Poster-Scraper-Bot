@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WZML-K</title>
+<title>Poster Scraper Bot</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
@@ -63,7 +63,7 @@ body::before {
   border:1px solid var(--border);
   border-radius:20px;
   padding:3rem 3.5rem;
-  max-width:700px; width:100%;
+  max-width:720px; width:100%;
   backdrop-filter:blur(24px);
   box-shadow: 0 0 60px rgba(123,47,255,0.15), 0 0 0 1px rgba(255,255,255,0.04) inset;
   animation: fadeUp .8s ease both;
@@ -93,9 +93,10 @@ body::before {
   width:100%; height:100%; border-radius:50%;
   background:linear-gradient(135deg,var(--accent1),var(--accent3));
   display:flex; align-items:center; justify-content:center;
-  font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:900;
+  font-family:'Orbitron',sans-serif; font-size:1.7rem; font-weight:900;
   color:#fff;
 }
+.avatar-placeholder i { font-size:2.2rem; }
 
 .badge {
   display:inline-flex; align-items:center; gap:.4rem;
@@ -109,7 +110,7 @@ body::before {
 
 h1 {
   font-family:'Orbitron',sans-serif;
-  font-size:2.6rem; font-weight:900; letter-spacing:3px;
+  font-size:2.5rem; font-weight:900; letter-spacing:2px;
   background:linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
   -webkit-background-clip:text; background-clip:text; color:transparent;
   margin-bottom:.5rem;
@@ -121,13 +122,30 @@ h1 {
 
 .desc {
   font-size:1rem; opacity:.55; margin-bottom:2.2rem;
-  line-height:1.7; max-width:480px; margin-inline:auto;
+  line-height:1.7; max-width:500px; margin-inline:auto;
 }
 
 .divider {
   height:1px; width:100%;
   background:linear-gradient(90deg, transparent, var(--accent1), var(--accent2), transparent);
   margin-bottom:2rem; opacity:.4;
+}
+
+.platforms {
+  display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem;
+  margin-bottom:2rem;
+}
+.chip {
+  font-size:.75rem; letter-spacing:.5px; text-transform:uppercase;
+  padding:.3rem .8rem; border-radius:20px;
+  background:rgba(0,229,255,0.06);
+  border:1px solid rgba(0,229,255,0.2);
+  color:var(--accent2); opacity:.85;
+}
+.chip.more {
+  background:rgba(255,45,120,0.08);
+  border-color:rgba(255,45,120,0.25);
+  color:var(--accent3);
 }
 
 .btns {
@@ -175,6 +193,21 @@ h1 {
 }
 .btn-sup:hover { box-shadow:0 8px 30px rgba(0,229,255,0.2); border-color:var(--accent2); }
 
+.usage {
+  background:rgba(123,47,255,0.06);
+  border:1px solid rgba(123,47,255,0.15);
+  border-radius:12px; padding:1rem 1.2rem;
+  margin-bottom:2rem; text-align:left;
+  font-size:.9rem;
+}
+.usage code {
+  color:var(--accent2); font-family:monospace;
+}
+.usage .label {
+  font-size:.7rem; text-transform:uppercase; letter-spacing:1.5px;
+  opacity:.5; margin-bottom:.4rem;
+}
+
 .stats {
   display:flex; justify-content:center; gap:2.5rem;
   background:rgba(123,47,255,0.06);
@@ -221,16 +254,33 @@ h1 {
   <div class="card">
     <div class="avatar-wrap">
       <div class="avatar-ring"></div>
-      <div class="avatar-placeholder">WK</div>
+      <div class="avatar-placeholder"><i class="fas fa-image"></i></div>
     </div>
 
     <div class="badge"><i class="fas fa-circle-dot"></i> <span class="live"><span class="dot"></span> Active</span></div>
 
-    <h1>WZML-K</h1>
-    <p class="subtitle">A Simplified Fork of <span style="color:var(--accent2);font-weight:700;">WZML-X</span></p>
-    <p class="desc">A lightweight, stripped-down version of WZML-X — built for simplicity.</p>
+    <h1>Poster Scraper Bot</h1>
+    <p class="subtitle">Grab OTT posters, covers &amp; backdrops <span style="color:var(--accent2);font-weight:700;">instantly</span></p>
+    <p class="desc">Send a title link from any supported streaming platform and get back high‑res posters, landscapes, logos and thumbnails in seconds.</p>
 
     <div class="divider"></div>
+
+    <div class="platforms">
+      <span class="chip">Netflix</span>
+      <span class="chip">Prime Video</span>
+      <span class="chip">Apple TV+</span>
+      <span class="chip">ZEE5</span>
+      <span class="chip">SonyLIV</span>
+      <span class="chip">Hulu</span>
+      <span class="chip">Crunchyroll</span>
+      <span class="chip">MX Player</span>
+      <span class="chip more">+30 more</span>
+    </div>
+
+    <div class="usage">
+      <div class="label">Usage</div>
+      <code>/poster https://example.com/title-url</code>
+    </div>
 
     <div class="btns">
       <a href="https://t.me/LeechBots" class="btn btn-tg" target="_blank">
@@ -239,15 +289,15 @@ h1 {
       <a href="https://t.me/NxTalks" class="btn btn-sup" target="_blank">
         <i class="fas fa-headset"></i> Support
       </a>
-      <a href="https://github.com/ImKrishana" class="btn btn-gh" target="_blank">
+      <a href="https://github.com/ImKrishana/Poster-Scraper-Bot" class="btn btn-gh" target="_blank">
         <i class="fab fa-github"></i> GitHub
       </a>
     </div>
 
     <div class="stats">
       <div class="stat">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">Uptime</div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">Platforms</div>
       </div>
       <div class="stat">
         <div class="stat-num">Fast</div>
@@ -259,8 +309,9 @@ h1 {
       </div>
     </div>
 
-    <p class="footer">&copy; 2025 <span>WZML-K</span> · All rights reserved</p>
+    <p class="footer">&copy; 2025 <span>Poster Scraper Bot</span> · Bot by @TheZake</p>
   </div>
 </div>
 </body>
-</html>
+  </html>
+  
