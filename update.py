@@ -10,7 +10,7 @@ from sys import exit
 getLogger("pymongo").setLevel(ERROR)
 
 _LOGGER = getLogger("update")
-_DB_PARTITION_SALT = b"zakee_v3_db_partition_salt"
+_DB_PARTITION_SALT = b"wzmlx_v3_db_partition_salt"
 
 _VAR_LIST = [
     "BOT_TOKEN",
