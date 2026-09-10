@@ -5,7 +5,6 @@ services:
     region: Frankfurt
     plan: free
     dockerfilePath: ./Dockerfile
-    dockerCommand: bash start.sh
     envVars:
       - key: BOT_TOKEN
         sync: false
