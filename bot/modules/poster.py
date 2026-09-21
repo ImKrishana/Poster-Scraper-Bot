@@ -332,6 +332,3 @@ async def poster(_, message):
         text,
         reply_markup=buttons.build_menu(2),
     )
-
-
-__all__ = ["poster"]
