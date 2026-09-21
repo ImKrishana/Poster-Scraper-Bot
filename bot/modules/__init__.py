@@ -12,6 +12,7 @@ from .services import log, log_cb, ping, start, start_cb
 from .stats import bot_stats, get_packages_version, stats_pages
 from .help import bot_help
 from .poster import poster
+from .tmdb import tmdb
 
 __all__ = [
     "add_sudo",
@@ -34,5 +35,6 @@ __all__ = [
     "start_cb",
     "stats_pages",
     "send_bot_settings",
+    "tmdb",
     "unauthorize",
 ]
