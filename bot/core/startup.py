@@ -17,7 +17,16 @@ from .. import (
 )
 from ..helper.ext_utils.db_handler import database
 from .config_manager import Config
-from .tg_client import TgClient
+from .tg_client import TgClient, db_partition_id
+
+
+def _part():
+    if TgClient.PARTITION:
+        return str(TgClient.PARTITION)
+    BOT_ID = Config.BOT_TOKEN.split(":", 1)[0]
+    TgClient.PARTITION = db_partition_id(BOT_ID)
+    return TgClient.PARTITION
+
 
 async def load_settings():
     if not Config.DATABASE_URL:
@@ -26,7 +35,7 @@ async def load_settings():
     await database.connect()
 
     if database.db is not None:
-        BOT_ID = Config.BOT_TOKEN.split(":", 1)[0]
+        PART = _part()
 
         try:
             settings = import_module("config")
@@ -47,23 +56,23 @@ async def load_settings():
         )
 
         old_config = await database.db.settings.deployConfig.find_one(
-            {"_id": BOT_ID}, {"_id": 0}
+            {"_id": PART}, {"_id": 0}
         )
 
         if old_config is None:
             await database.db.settings.deployConfig.replace_one(
-                {"_id": BOT_ID}, config_file, upsert=True
+                {"_id": PART}, config_file, upsert=True
             )
 
         if old_config and old_config != config_file:
             LOGGER.info("Saving.. Deploy Config imported from Bot")
             await database.db.settings.deployConfig.replace_one(
-                {"_id": BOT_ID}, config_file, upsert=True
+                {"_id": PART}, config_file, upsert=True
             )
 
             config_dict = (
                 await database.db.settings.config.find_one(
-                    {"_id": BOT_ID}, {"_id": 0}
+                    {"_id": PART}, {"_id": 0}
                 )
                 or {}
             )
@@ -76,14 +85,14 @@ async def load_settings():
             LOGGER.info("Updating.. Saved Config imported from MongoDB")
 
             config_dict = await database.db.settings.config.find_one(
-                {"_id": BOT_ID}, {"_id": 0}
+                {"_id": PART}, {"_id": 0}
             )
 
             if config_dict:
                 Config.load_dict(config_dict)
 
         if pf_dict := await database.db.settings.files.find_one(
-            {"_id": BOT_ID}, {"_id": 0}
+            {"_id": PART}, {"_id": 0}
         ):
             for key, value in pf_dict.items():
                 if value:
@@ -91,8 +100,8 @@ async def load_settings():
                     async with aiopen(file_, "wb+") as f:
                         await f.write(value)
 
-        if await database.db.users[BOT_ID].find_one():
-            rows = database.db.users[BOT_ID].find({})
+        if await database.db.users[PART].find_one():
+            rows = database.db.users[PART].find({})
 
             async for row in rows:
                 uid = row["_id"]
@@ -100,7 +109,8 @@ async def load_settings():
                 user_data[uid] = row
 
             LOGGER.info("Users Data has been imported from MongoDB")
-            
+
+
 async def save_settings():
     if database.db is None:
         return
@@ -108,7 +118,7 @@ async def save_settings():
     config_file = Config.get_all()
 
     await database.db.settings.config.update_one(
-        {"_id": TgClient.ID},
+        {"_id": _part()},
         {"$set": config_file},
         upsert=True,
     )
@@ -152,6 +162,7 @@ async def update_variables():
                 temp = line.strip().split()
                 if len(temp) == 2:
                     shortener_dict[temp[0]] = temp[1]
+
 
 async def load_configurations():
     PORT = getenv("PORT", "") or Config.BASE_URL_PORT
