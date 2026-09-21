@@ -8,7 +8,19 @@ from pymongo.server_api import ServerApi
 
 from ... import LOGGER, user_data
 from ...core.config_manager import Config
-from ...core.tg_client import TgClient
+from ...core.tg_client import TgClient, db_partition_id
+
+
+def _bot_id():
+    if TgClient.ID:
+        return str(TgClient.ID)
+    return Config.BOT_TOKEN.split(":", 1)[0]
+
+
+def _part():
+    if not TgClient.PARTITION:
+        TgClient.PARTITION = db_partition_id(_bot_id())
+    return TgClient.PARTITION
 
 
 class DbManager:
@@ -48,14 +60,14 @@ class DbManager:
             if not key.startswith("__")
         }
         await self.db.settings.deployConfig.replace_one(
-            {"_id": TgClient.ID}, config_file, upsert=True
+            {"_id": _part()}, config_file, upsert=True
         )
 
     async def update_config(self, dict_):
         if self._return:
             return
         await self.db.settings.config.update_one(
-            {"_id": TgClient.ID}, {"$set": dict_}, upsert=True
+            {"_id": _part()}, {"$set": dict_}, upsert=True
         )
 
     async def update_private_file(self, path):
@@ -66,13 +78,13 @@ class DbManager:
             async with aiopen(path, "rb+") as pf:
                 pf_bin = await pf.read()
             await self.db.settings.files.update_one(
-                {"_id": TgClient.ID}, {"$set": {db_path: pf_bin}}, upsert=True
+                {"_id": _part()}, {"$set": {db_path: pf_bin}}, upsert=True
             )
             if path == "config.py":
                 await self.update_deploy_config()
         else:
             await self.db.settings.files.update_one(
-                {"_id": TgClient.ID}, {"$unset": {db_path: ""}}, upsert=True
+                {"_id": _part()}, {"$unset": {db_path: ""}}, upsert=True
             )
 
     async def update_user_data(self, user_id):
@@ -80,8 +92,8 @@ class DbManager:
             return
         data = user_data.get(user_id, {})
         data = data.copy()
-    
-        await self.db.users[TgClient.ID].update_one({"_id": user_id}, {"$set": data}, upsert=True)
+
+        await self.db.users[_part()].update_one({"_id": user_id}, {"$set": data}, upsert=True)
 
     async def update_user_doc(self, user_id, key, path=""):
         if self._return:
@@ -89,35 +101,35 @@ class DbManager:
         if path:
             async with aiopen(path, "rb+") as doc:
                 doc_bin = await doc.read()
-            await self.db.users[TgClient.ID].update_one(
+            await self.db.users[_part()].update_one(
                 {"_id": user_id}, {"$set": {key: doc_bin}}, upsert=True
             )
         else:
-            await self.db.users[TgClient.ID].update_one(
+            await self.db.users[_part()].update_one(
                 {"_id": user_id}, {"$unset": {key: ""}}, upsert=True
             )
 
     async def get_pm_uids(self):
         if self._return:
             return
-        return [doc["_id"] async for doc in self.db.pm_users[TgClient.ID].find({})]
+        return [doc["_id"] async for doc in self.db.pm_users[_part()].find({})]
 
     async def set_pm_users(self, user_id):
         if self._return:
             return
-        if not bool(await self.db.pm_users[TgClient.ID].find_one({"_id": user_id})):
-            await self.db.pm_users[TgClient.ID].insert_one({"_id": user_id})
+        if not bool(await self.db.pm_users[_part()].find_one({"_id": user_id})):
+            await self.db.pm_users[_part()].insert_one({"_id": user_id})
             LOGGER.info(f"New PM User Added : {user_id}")
 
     async def rm_pm_user(self, user_id):
         if self._return:
             return
-        await self.db.pm_users[TgClient.ID].delete_one({"_id": user_id})
+        await self.db.pm_users[_part()].delete_one({"_id": user_id})
 
     async def trunc_table(self, name):
         if self._return:
             return
-        await self.db[name][TgClient.ID].drop()
+        await self.db[name][_part()].drop()
 
 
 database = DbManager()
