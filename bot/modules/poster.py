@@ -188,8 +188,8 @@ async def poster(_, message):
         return await send_message(
             message,
             "<b>New ?:</b> "
-            "<code>/poster https://example.com</code>\n\n"
-            "Send a supported OTT url after <code>/poster</code>, "
+            "<code>/ott https://example.com</code>\n\n"
+            "Send a supported OTT url after <code>/ott</code>, "
             "or reply to a message containing a link.",
         )
 
