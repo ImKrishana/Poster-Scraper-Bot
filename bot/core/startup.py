@@ -124,18 +124,6 @@ async def save_settings():
 
 
 async def update_variables():
-    if (
-        Config.LEECH_SPLIT_SIZE > TgClient.MAX_SPLIT_SIZE
-        or Config.LEECH_SPLIT_SIZE == 2097152000
-        or not Config.LEECH_SPLIT_SIZE
-    ):
-        Config.LEECH_SPLIT_SIZE = TgClient.MAX_SPLIT_SIZE
-
-    Config.HYBRID_LEECH = bool(Config.HYBRID_LEECH and TgClient.IS_PREMIUM_USER)
-    Config.USER_TRANSMISSION = bool(
-        Config.USER_TRANSMISSION and TgClient.IS_PREMIUM_USER
-    )
-
     if Config.AUTHORIZED_CHATS:
         aid = Config.AUTHORIZED_CHATS.split()
         for id_ in aid:
