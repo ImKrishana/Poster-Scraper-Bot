@@ -2,7 +2,7 @@ from asyncio import create_subprocess_exec, gather
 from datetime import datetime
 from os import execl as osexecl
 from sys import executable
-
+from pyrogram.enums import ButtonStyle
 from aiofiles import open as aiopen
 from aiofiles.os import path as aiopath, remove
 from pytz import timezone
@@ -21,12 +21,11 @@ from ..helper.telegram_helper.message_utils import (
     send_message,
 )
 
-
 @new_task
 async def restart_bot(_, message):
     buttons = button_build.ButtonMaker()
-    buttons.data_button("Yes!", "botrestart confirm")
-    buttons.data_button("No!", "botrestart cancel")
+    buttons.data_button("Yes!", "botrestart confirm", style=ButtonStyle.DANGER)
+    buttons.data_button("No!", "botrestart cancel", style=ButtonStyle.SUCCESS)
     button = buttons.build_menu(2)
     await send_message(
         message, "<i>Are you really sure you want to restart the bot ?</i>", button
@@ -36,15 +35,15 @@ async def restart_bot(_, message):
 @new_task
 async def restart_sessions(_, message):
     buttons = button_build.ButtonMaker()
-    buttons.data_button("Yes!", "sessionrestart confirm")
-    buttons.data_button("No!", "sessionrestart cancel")
+    buttons.data_button("Yes!", "sessionrestart confirm", style=ButtonStyle.DANGER)
+    buttons.data_button("No!", "sessionrestart cancel", style=ButtonStyle.SUCCESS)
     button = buttons.build_menu(2)
     await send_message(
         message,
         "<i>Are you really sure you want to restart the session(s) ?!</>",
         button,
     )
-
+    
 async def restart_notification():
     if await aiopath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
