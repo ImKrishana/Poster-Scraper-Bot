@@ -66,7 +66,7 @@ class TgClient:
         cls.ID = Config.BOT_TOKEN.split(":", 1)[0]
         cls.PARTITION = db_partition_id(cls.ID)
         cls.bot = cls.wztgClient(
-            f"Zake-Bot{cls.ID}",
+            f"zake-Bot{cls.ID}",
             bot_token=Config.BOT_TOKEN,
             workdir="/usr/src/app",
         )
@@ -79,14 +79,14 @@ class TgClient:
                 await sleep(e.value)
         cls.BNAME = cls.bot.me.username
         cls.ID = Config.BOT_TOKEN.split(":", 1)[0]
-        LOGGER.info(f"Zake Bot : [@{cls.BNAME}] Started!")
+        LOGGER.info(f"zake Bot : [@{cls.BNAME}] Started!")
 
     @classmethod
     async def _retry_user(cls, delay):
         await sleep(delay)
         try:
             cls.user = cls.wztgClient(
-                "Zake-User",
+                "zake-User",
                 session_string=Config.USER_SESSION_STRING,
                 sleep_threshold=60,
                 no_updates=True,
@@ -96,7 +96,7 @@ class TgClient:
             if cls.IS_PREMIUM_USER:
                 cls.MAX_SPLIT_SIZE = 4194304000
             uname = cls.user.me.username or cls.user.me.first_name
-            LOGGER.info(f"Zake User : [{uname}] Started!")
+            LOGGER.info(f"zake User : [{uname}] Started!")
         except FloodWait as e:
             LOGGER.warning(f"User client FloodWait: Retrying in {e.value}s...")
             bot_loop.create_task(cls._retry_user(e.value))
@@ -112,7 +112,7 @@ class TgClient:
             LOGGER.info("Generating client from USER_SESSION_STRING")
             try:
                 cls.user = cls.wztgClient(
-                    "Zake-User",
+                    "zake-User",
                     session_string=Config.USER_SESSION_STRING,
                     sleep_threshold=60,
                     no_updates=True,
@@ -122,7 +122,7 @@ class TgClient:
                 if cls.IS_PREMIUM_USER:
                     cls.MAX_SPLIT_SIZE = 4194304000
                 uname = cls.user.me.username or cls.user.me.first_name
-                LOGGER.info(f"WZ User : [{uname}] Started!")
+                LOGGER.info(f"zake User : [{uname}] Started!")
             except FloodWait as e:
                 LOGGER.warning(
                     f"User client FloodWait: Retrying in {e.value}s (non-blocking)..."
