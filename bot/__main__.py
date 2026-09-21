@@ -64,10 +64,7 @@ async def main():
 
     from .helper.ext_utils.files_utils import clean_all
     from .helper.ext_utils.telegraph_helper import telegraph
-    from .modules import (
-        get_packages_version,
-        restart_notification,
-    )
+    from .modules import get_packages_version
 
     global _clean_task
     _clean_task = bot_loop.create_task(clean_all())
@@ -141,6 +138,8 @@ TgClient.bot.add_handler(
         filters=regex("^sessionrestart") & CustomFilters.sudo,
     )
 )
+
+from .modules import restart_notification
 
 if _clean_task is not None:
     try:
