@@ -297,10 +297,9 @@ async def poster(_, message):
         )
 
     buttons = ButtonMaker()
+    buttons.url_button("Developer", "https://t.me/TheZake", style=ButtonStyle.PRIMARY)
+    buttons.url_button("⭐ Source Code", "https://github.com/ImKrishana/Poster-Scraper-Bot", style=ButtonStyle.SUCCESS)
 
-    buttons.url_button("Developer", "https://t.me/TheZake", style="primary")
-
-    buttons.url_button("⭐ Source Code", "https://github.com/ImKrishana/Poster-Scraper-Bot", style="success")
 
     if waiting:
         try:
