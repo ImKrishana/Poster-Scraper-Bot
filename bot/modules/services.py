@@ -6,6 +6,7 @@ from re import match
 from aiofiles import open as aiopen
 from cloudscraper import create_scraper
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.enums import ButtonStyle
 
 from .. import LOGGER, user_data
 from ..core.config_manager import Config
@@ -26,16 +27,15 @@ from ..helper.telegram_helper.message_utils import (
     send_message,
 )
 
-
 @new_task
 async def start(_, message):
     userid = message.from_user.id
     lang = Language()
     buttons = ButtonMaker()
     buttons.url_button(
-        lang.START_BUTTON1, "https://github.com/ImKrishana/Poster-Scraper-Bot"
+        lang.START_BUTTON1, "https://github.com/ImKrishana/Poster-Scraper-Bot", style=ButtonStyle.SUCCESS
     )
-    buttons.url_button(lang.START_BUTTON2, "https://t.me/TheZake")
+    buttons.url_button(lang.START_BUTTON2, "https://t.me/TheZake", style=ButtonStyle.PRIMARY)
     reply_markup = buttons.build_menu(2)
 
     if len(message.command) > 1 and message.command[1] == "wzmlx":
@@ -65,7 +65,7 @@ async def start(_, message):
                     "<b>Bot Already Logged In via Password</b>\n\n<i>No Need to Accept Temp Tokens.</i>",
                 )
             buttons.data_button(
-                "Activate Access Token", f"start pass {input_token}", "header"
+                "Activate Access Token", f"start pass {input_token}", "header", style=ButtonStyle.SUCCESS
             )
             reply_markup = buttons.build_menu(2)
             msg = f"""⌬ Access Login Token : 
@@ -160,17 +160,15 @@ async def ping(_, message):
         reply, f"<i>Pong!</i>\n <code>{int((end_time - start_time) * 1000)} ms</code>"
     )
 
-
 @new_task
 async def log(_, message):
     uid = message.from_user.id
     buttons = ButtonMaker()
-    buttons.data_button("Log Disp", f"log {uid} disp")
-    buttons.data_button("Web Log", f"log {uid} web")
-    buttons.data_button("Close", f"log {uid} close")
+    buttons.data_button("Log Disp", f"log {uid} disp", style=ButtonStyle.PRIMARY)
+    buttons.data_button("Web Log", f"log {uid} web", style=ButtonStyle.PRIMARY)
+    buttons.data_button("Close", f"log {uid} close", style=ButtonStyle.DANGER)
     await send_file(message, "log.txt", buttons=buttons.build_menu(2))
-
-
+    
 @new_task
 async def log_cb(_, query):
     data = query.data.split()

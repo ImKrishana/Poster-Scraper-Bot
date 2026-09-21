@@ -3,37 +3,40 @@ from os import getenv
 
 
 class Config:
-    AUTHORIZED_CHATS = ""
-    AUTHOR_NAME = "TheZake"
-    AUTHOR_URL = "https://t.me/TheZake"
-    BOT_TOKEN = ""
-    BASE_URL = ""
-    BASE_URL_PORT = 80
-    CMD_SUFFIX = ""
-    CONCURRENT_CPU_TASKS = 1
-    DATABASE_URL = ""
-    DEFAULT_LANG = "en"
-    HELPER_TOKENS = ""
-    HYBRID_LEECH = True
-    LEECH_SPLIT_SIZE = 2097152000
-    OWNER_ID = 0
-    POSTER_API_URL = "https://thezakeapi.vercel.app"
-    POSTER_API_TOKEN = "thezake"
-    PROTECTED_API = ""
-    PUBLIC_MODE = True 
-    SUDO_USERS = ""
-    SET_COMMANDS = True
     TELEGRAM_API = 0
     TELEGRAM_HASH = ""
+    BOT_TOKEN = ""
+    USER_SESSION_STRING = ""
     TG_PROXY = None
+
+    OWNER_ID = 0
+    AUTHORIZED_CHATS = ""
+    SUDO_USERS = ""
+    PUBLIC_MODE = True
+    VERIFY_TIMEOUT = 0
+
+    DATABASE_URL = ""
+
+    BASE_URL = ""
+    BASE_URL_PORT = 80
+    PROTECTED_API = ""
+
+    CMD_SUFFIX = ""
+    DEFAULT_LANG = "en"
+    SET_COMMANDS = True
     TIMEZONE = "Asia/Kolkata"
+
+    TMDB_ACCESS_TOKEN = ""
+    POSTER_API_URL = "https://thezakeapi.vercel.app"
+    POSTER_API_TOKEN = "thezake"
+
+    AUTHOR_NAME = "TheZake"
+    AUTHOR_URL = "https://t.me/TheZake"
+
     UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
     UPSTREAM_BRANCH = "main"
     UPDATE_PKGS = True
-    USER_SESSION_STRING = ""
-    USER_TRANSMISSION = False 
-    VERIFY_TIMEOUT = 0
-
+    
     @classmethod
     def get(cls, key):
         return getattr(cls, key) if hasattr(cls, key) else None
@@ -56,8 +59,8 @@ class Config:
 
     @classmethod
     def load(cls):
-        cls.load_config()
         cls.load_env()
+        cls.load_config()
 
     @classmethod
     def load_config(cls):

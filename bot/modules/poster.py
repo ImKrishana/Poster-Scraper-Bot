@@ -1,8 +1,7 @@
-# bot/modules/poster.py
-
 from html import escape
+from re import search as re_search
 from urllib.parse import urlparse
-
+from pyrogram.enums import ButtonStyle 
 from httpx import AsyncClient, HTTPError
 
 from .. import LOGGER
@@ -111,6 +110,13 @@ def find_platform(url: str) -> str | None:
     return None
 
 
+def extract_url_from_text(text: str) -> str | None:
+    if not text:
+        return None
+    match = re_search(r"https?://\S+", text)
+    return match.group(0) if match else None
+
+
 def format_result(data: dict, platform: str, url: str) -> str:
     title = escape(str(data.get("title") or "N/A"))
     year = escape(str(data.get("year") or "N/A"))
@@ -170,15 +176,22 @@ def format_result(data: dict, platform: str, url: str) -> str:
 
 @new_task
 async def poster(_, message):
-    if len(message.command) < 2:
+    url = None
+
+    if len(message.command) >= 2:
+        url = message.command[1].strip()
+    elif message.reply_to_message:
+        replied = message.reply_to_message
+        url = extract_url_from_text(replied.text or replied.caption)
+
+    if not url:
         return await send_message(
             message,
             "<b>New ?:</b> "
-            "<code>/poster https://example.com</code>\n\n"
-            "Send a supported OTT url after <code>/poster</code>.",
+            "<code>/ott https://example.com</code>\n\n"
+            "Send a supported OTT url after <code>/ott</code>, "
+            "or reply to a message containing a link.",
         )
-
-    url = message.command[1].strip()
 
     parsed = urlparse(url)
 
@@ -299,16 +312,9 @@ async def poster(_, message):
         )
 
     buttons = ButtonMaker()
+    buttons.url_button("Developer", "https://t.me/TheZake", style=ButtonStyle.PRIMARY)
+    buttons.url_button("⭐ Source Code", "https://github.com/ImKrishana/Poster-Scraper-Bot", style=ButtonStyle.SUCCESS)
 
-    buttons.url_button(
-        "Developer",
-        "https://t.me/Leechbots",
-    )
-
-    buttons.url_button(
-        "⭐ Source Code",
-        "https://github.com/ImKrishana/Poster-Scraper-Bot",
-    )
 
     if waiting:
         try:
@@ -326,6 +332,3 @@ async def poster(_, message):
         text,
         reply_markup=buttons.build_menu(2),
     )
-
-
-__all__ = ["poster"]

@@ -5,7 +5,8 @@ class BotCommands:
 
     _static_commands = {
         "Ping": ["ping"],
-        "Poster": ["poster"],
+        "Poster": ["ott", "otts"],
+        "Tmdb": ["poster", "p", "tmdb"],
         "Help": ["help", "h"],
         "Stats": ["stats", "st"],
         "Log": ["log"],

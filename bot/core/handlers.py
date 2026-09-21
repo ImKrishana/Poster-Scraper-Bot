@@ -12,7 +12,7 @@ from ..modules import *
 from .tg_client import TgClient
 
 
-def add_handlers():
+async def add_handlers():
     TgClient.bot.add_handler(
         MessageHandler(
             send_bot_settings,
@@ -121,6 +121,14 @@ def add_handlers():
 
     TgClient.bot.add_handler(
         MessageHandler(
+            tmdb,
+            filters=command(BotCommands.TmdbCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
             bot_help,
             filters=command(BotCommands.HelpCommand, case_sensitive=True)
             & CustomFilters.authorized,
@@ -153,7 +161,7 @@ def add_handlers():
         def insert_at(d, k, v, i):
             return dict(list(d.items())[:i] + [(k, v)] + list(d.items())[i:])
 
-        TgClient.bot.set_bot_commands(
+        await TgClient.bot.set_bot_commands(
             [
                 BotCommand(
                     cmds[0] if isinstance(cmds, list) else cmds,
@@ -163,4 +171,4 @@ def add_handlers():
                 for cmds in [getattr(BotCommands, f"{cmd}Command", None)]
                 if cmds is not None
             ]
-    )
+        )

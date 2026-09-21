@@ -11,7 +11,6 @@ lxml
 motor
 psutil
 pymongo
-pyrotgfork==2.2.19
 python-dotenv
 pytz
 telegraph
@@ -19,3 +18,4 @@ tenacity
 tgcrypto
 uvicorn
 uvloop
+wzgram

@@ -53,8 +53,8 @@
 
 ### Required Variables
 
-- **`API_ID`** - Get this from [my.telegram.org](https://my.telegram.org)
-- **`API_HASH`** - Get this from [my.telegram.org](https://my.telegram.org)
+- **`TELEGRAM_API`** - Get this from [my.telegram.org](https://my.telegram.org)
+- **`TELEGRAM_HASH`** - Get this from [my.telegram.org](https://my.telegram.org)
 - **`BOT_TOKEN`** - Get this from [@BotFather](https://t.me/BotFather)
 - **`DATABASE_URL`** - MongoDB database URL
 - **`OWNER_ID`** - Your Telegram user ID
@@ -72,6 +72,7 @@
 - **`DEFAULT_LANG`** - Default language used by the bot
 - **`POSTER_API_URL`** - API URL used for generating or fetching posters
 - **`POSTER_API_TOKEN`** - Authentication token for the poster API
+- **`TMDB_ACCESS_TOKEN`** - TMDB API token (optional, uses proxy if not set)
 - **`PROTECTED_API`** - Shortener Bypass API endpoint or URL
 - **`PUBLIC_MODE`** - Enables or disables public mode for the bot
 - **`SUDO_USERS`** - Telegram user IDs with sudo/admin-level access
@@ -89,7 +90,7 @@
 <details>
   <summary><strong>Heroku (One-Click Deploy)</strong></summary>
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ImKrishana/Poster-Scraper-Bot/tree/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ImKrishana/Poster-Scraper-Bot/tree/main)
 
 </details>
 
@@ -191,11 +192,9 @@ docker-compose down -v
    heroku login
    ```
 
-2. **Clone Repository & Switch to Deploy Branch**
+2. **Clone Repository**
    ```bash
-   git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb
-   cd psb
-   git checkout deploy
+   git clone https://github.com/ImKrishana/Poster-Scraper-Bot psb && cd psb
    ```
 
 3. **Create `config.py` File**
@@ -217,17 +216,17 @@ docker-compose down -v
 4. **Commit Changes**
    ```bash
    git add . -f
-   git commit -m "echo"
+   git commit -m "thezake"
    ```
 
 5. **Create Heroku App**
    ```bash
-   heroku create YOUR-APP-NAME
+   heroku create APP_NAME
    ```
 
 6. **Add Remote**
    ```bash
-   heroku git:remote -a YOUR-APP-NAME
+   heroku git:remote -a APP_NAME
    ```
 
 7. **Set Container Stack**
@@ -237,7 +236,7 @@ docker-compose down -v
 
 8. **Deploy**
    ```bash
-   git push heroku deploy:main -f
+   git push heroku main -f
    ```
 
 9. **Check Logs**
