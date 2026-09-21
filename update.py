@@ -3,6 +3,8 @@ from hashlib import sha256
 from importlib import import_module
 from logging import ERROR, INFO, FileHandler, StreamHandler, basicConfig, getLogger
 from os import environ, path, remove
+from os.path import isdir
+from shutil import rmtree
 from subprocess import call as scall
 from subprocess import run as srun
 from sys import exit
@@ -68,7 +70,7 @@ def _db_partition_id(bot_id):
     return f"p_{raw[:24]}"
 
 
-async def _fetch_db_config(database_url, db_part):
+async def _fetch_db_config(database_url, db_part, collection="config"):
     try:
         from pymongo import AsyncMongoClient
         from pymongo.server_api import ServerApi
@@ -78,7 +80,9 @@ async def _fetch_db_config(database_url, db_part):
         from pymongo.server_api import ServerApi
     conn = AsyncMongoClient(database_url, server_api=ServerApi("1"))
     try:
-        return await conn.wzmlx.settings.config.find_one({"_id": db_part}, {"_id": 0})
+        return await conn.wzmlx.settings[collection].find_one(
+            {"_id": db_part}, {"_id": 0}
+        )
     except Exception as e:
         _LOGGER.error(f"Database ERROR: {e}")
         return None
@@ -90,14 +94,38 @@ def _fetch_config_from_db(config_file, db_part):
     database_url = config_file.get("DATABASE_URL", "").strip()
     if not database_url:
         return
+
     db_config = run(_fetch_db_config(database_url, db_part))
-    if db_config is not None:
-        for key, value in db_config.items():
-            if key not in config_file or config_file[key] is None:
-                config_file[key] = value
-        _LOGGER.info("Config imported from MongoDB")
-    else:
+    if db_config is None:
         _LOGGER.warning("No saved config found in MongoDB, using defaults")
+        return
+
+    old_config = run(_fetch_db_config(database_url, db_part, collection="deployConfig"))
+    env_keys = {k: config_file[k] for k in _VAR_LIST if k in environ}
+
+    if old_config is not None and old_config != config_file:
+        merged = dict(config_file)
+        for k, v in db_config.items():
+            if k in old_config and config_file.get(k) is not None:
+                if old_config.get(k) == config_file.get(k):
+                    merged[k] = v
+            elif k not in merged or merged[k] is None:
+                merged[k] = v
+        config_file.clear()
+        config_file.update(merged)
+        _LOGGER.info("Config: config.py changed, takes priority over MongoDB")
+    else:
+        merged = dict(config_file)
+        if db_config:
+            merged.update(db_config)
+        config_file.clear()
+        config_file.update(merged)
+        _LOGGER.info(
+            "Config imported from MongoDB"
+            if old_config is not None
+            else "Config: first deploy, config.py fills gaps from MongoDB"
+        )
+    config_file.update(env_keys)
 
 
 def _run_update(upstream_repo, upstream_branch, version):
@@ -141,6 +169,15 @@ def _update_packages():
     _LOGGER.info("Successfully Updated all the Packages!")
 
 
+def _cleanup():
+    for d in ["gen_scripts", ".github"]:
+        if isdir(d):
+            rmtree(d, ignore_errors=True)
+    for f in ["README.md", "LICENSE", "Dockerfile", "docker-compose.yml"]:
+        if path.exists(f):
+            remove(f)
+
+
 def main():
     _setup_logging()
     config_file = _load_config()
@@ -153,6 +190,7 @@ def main():
     upstream_repo = config_file.get("UPSTREAM_REPO", "").strip()
     upstream_branch = config_file.get("UPSTREAM_BRANCH", "").strip() or "wzv3"
     _run_update(upstream_repo, upstream_branch, version)
+    _cleanup()
     _update_packages()
 
 
