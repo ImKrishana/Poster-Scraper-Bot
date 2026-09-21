@@ -13,6 +13,7 @@ from aiofiles.os import path as aiopath
 from aiofiles.os import remove, rename
 from aioshutil import rmtree
 from pyrogram.filters import create
+from pyrogram.enums import ButtonStyle
 from pyrogram.handlers import MessageHandler
 
 from .. import (
@@ -46,21 +47,20 @@ DEFAULT_VALUES = {
     "CONCURRENT_CPU_TASKS": 1,
 }
 
-
 async def get_buttons(key=None, edit_type=None, edit_mode=False):
     buttons = ButtonMaker()
     if key is None:
-        buttons.data_button("Config Variables", "botset var")
-        buttons.data_button("Private Files", "botset private open")
-        buttons.data_button("Close", "botset close")
+        buttons.data_button("Config Variables", "botset var", style=ButtonStyle.PRIMARY)
+        buttons.data_button("Private Files", "botset private open", style=ButtonStyle.PRIMARY)
+        buttons.data_button("Close", "botset close", style=ButtonStyle.DANGER)
         msg = "Bot Settings:"
     elif edit_type is not None:
         if edit_type == "botvar":
             msg = ""
             buttons.data_button("Back", "botset var")
             if key not in ["TELEGRAM_HASH", "TELEGRAM_API", "OWNER_ID", "BOT_TOKEN"]:
-                buttons.data_button("Default", f"botset resetvar {key}")
-            buttons.data_button("Close", "botset close")
+                buttons.data_button("Default", f"botset resetvar {key}", style=ButtonStyle.DANGER)
+            buttons.data_button("Close", "botset close", style=ButtonStyle.DANGER)
             if key in [
                 "CMD_SUFFIX",
                 "OWNER_ID",
@@ -79,11 +79,11 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
                 continue
             buttons.data_button(k, f"botset botvar {k}")
         if state == "view":
-            buttons.data_button("Edit", "botset edit var")
+            buttons.data_button("Edit", "botset edit var", style=ButtonStyle.PRIMARY)
         else:
-            buttons.data_button("View", "botset view var")
+            buttons.data_button("View", "botset view var", style=ButtonStyle.PRIMARY)
         buttons.data_button("Back", "botset back")
-        buttons.data_button("Close", "botset close")
+        buttons.data_button("Close", "botset close", style=ButtonStyle.DANGER)
         for x in range(0, len(conf_dict), 10):
             buttons.data_button(
                 f"{int(x / 10)}", f"botset start var {x}", position="footer"
@@ -91,12 +91,12 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
         msg = f"Config Variables | Page: {int(start / 10)} | State: {state}"
     elif key == "private":
         if edit_mode:
-            buttons.data_button("Stop Invoke File", "botset private stop", "header")
+            buttons.data_button("Stop Invoke File", "botset private stop", "header", style=ButtonStyle.DANGER)
         else:
-            buttons.data_button("Create New File", "botset private new")
-            buttons.data_button("Add/Delete File", "botset private edit")
+            buttons.data_button("Create New File", "botset private new", style=ButtonStyle.SUCCESS)
+            buttons.data_button("Add/Delete File", "botset private edit", style=ButtonStyle.PRIMARY)
         buttons.data_button("Back", "botset back", position="footer")
-        buttons.data_button("Close", "botset close", position="footer")
+        buttons.data_button("Close", "botset close", position="footer", style=ButtonStyle.DANGER)
         txt = "\n┠ ".join(
             [
                 f"<code>{fn}</code> → <b>{'Exists' if await aiopath.isfile(fn) else 'Not Exists'}</b>"
@@ -124,8 +124,7 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
 async def update_buttons(message, key=None, edit_type=None, edit_mode=False):
     msg, button = await get_buttons(key, edit_type, edit_mode)
     await edit_message(message, msg, button)
-
-
+    
 @new_task
 async def edit_variable(_, message, pre_message, key):
     handler_dict[message.chat.id] = False
