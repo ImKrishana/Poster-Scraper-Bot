@@ -56,8 +56,8 @@ class Config:
 
     @classmethod
     def load(cls):
-        cls.load_config()
         cls.load_env()
+        cls.load_config()
 
     @classmethod
     def load_config(cls):
