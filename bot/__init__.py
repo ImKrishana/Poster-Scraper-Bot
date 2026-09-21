@@ -6,8 +6,7 @@ install()
 
 from subprocess import run as srun
 from os import getcwd
-from asyncio import Lock, Semaphore, new_event_loop, set_event_loop
-from contextvars import ContextVar
+from asyncio import Lock, new_event_loop, set_event_loop
 from logging import (
     ERROR,
     INFO,
@@ -68,43 +67,4 @@ var_list = [
 auth_chats = {}
 sudo_users = []
 
-class CpuEaterLock:
-    def __init__(self, limit=1):
-        self._limit = limit
-        self._semaphore = Semaphore(limit)
-        self._acquired_sems = ContextVar("acquired_sems", default=[])
-
-    async def acquire(self):
-        sem = self._semaphore
-        await sem.acquire()
-        sems = self._acquired_sems.get().copy()
-        sems.append(sem)
-        self._acquired_sems.set(sems)
-
-    def release(self):
-        sems = self._acquired_sems.get().copy()
-        if sems:
-            sem = sems.pop()
-            sem.release()
-            self._acquired_sems.set(sems)
-
-    async def __aenter__(self):
-        await self.acquire()
-        return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        self.release()
-
-    def update_limit(self, new_limit):
-        if not isinstance(new_limit, int) or new_limit < 1:
-            new_limit = 1
-        if new_limit != self._limit:
-            self._limit = new_limit
-            self._semaphore = Semaphore(new_limit)
-
-    @property
-    def locked(self):
-        return self._semaphore.locked()
-
-cpu_eater_lock = CpuEaterLock()
 scheduler = AsyncIOScheduler(event_loop=bot_loop)

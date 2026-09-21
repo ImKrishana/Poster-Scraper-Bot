@@ -8,7 +8,6 @@ from aioshutil import rmtree
 
 from .. import (
     LOGGER,
-    cpu_eater_lock,
     auth_chats,
     shortener_dict,
     var_list,
@@ -125,8 +124,6 @@ async def save_settings():
 
 
 async def update_variables():
-    cpu_eater_lock.update_limit(Config.CONCURRENT_CPU_TASKS)
-
     if (
         Config.LEECH_SPLIT_SIZE > TgClient.MAX_SPLIT_SIZE
         or Config.LEECH_SPLIT_SIZE == 2097152000

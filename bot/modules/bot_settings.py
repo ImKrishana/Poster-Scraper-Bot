@@ -18,7 +18,6 @@ from pyrogram.handlers import MessageHandler
 
 from .. import (
     LOGGER,
-    cpu_eater_lock,
     shortener_dict,
     auth_chats,
     sudo_users,
@@ -44,7 +43,6 @@ handler_dict = {}
 DEFAULT_VALUES = {
     "LEECH_SPLIT_SIZE": TgClient.MAX_SPLIT_SIZE,
     "UPSTREAM_BRANCH": "master",
-    "CONCURRENT_CPU_TASKS": 1,
 }
 
 async def get_buttons(key=None, edit_type=None, edit_mode=False):
@@ -135,9 +133,6 @@ async def edit_variable(_, message, pre_message, key):
         value = False
     elif key == "LEECH_SPLIT_SIZE":
         value = min(int(value), TgClient.MAX_SPLIT_SIZE)
-    elif key == "CONCURRENT_CPU_TASKS":
-        value = int(value)
-        cpu_eater_lock.update_limit(value)
     elif key == "BASE_URL_PORT":
         value = int(value)
         if Config.BASE_URL:
@@ -390,7 +385,6 @@ async def send_bot_settings(_, message):
 
 async def load_config():
     Config.load()
-    cpu_eater_lock.update_limit(Config.CONCURRENT_CPU_TASKS)
     await update_variables()
 
     await (await create_subprocess_exec("pkill", "-9", "-f", "gunicorn")).wait()
