@@ -40,7 +40,7 @@ from ..version import get_version
 
 commands = {
     "python": (["python3", "--version"], r"Python ([\d.]+)"),
-    "pyrotgfork": (["uv", "pip", "show", "pyrotgfork"], r"Version: ([\d.]+)"),
+    "wzgram": (["uv", "pip", "show", "wzgram"], r"Version: ([\d.]+)"),
 }
 
 
@@ -115,7 +115,7 @@ async def get_stats(event, key="home"):
             )[0]
         official_v = (
             await cmd_exec(
-                f"curl -o latestversion.py https://raw.githubusercontent.com/SilentDemonSD/WZML-X/{Config.UPSTREAM_BRANCH}/bot/version.py -s && python3 latestversion.py && rm latestversion.py",
+                f"curl -o latestversion.py https://raw.githubusercontent.com/ImKrishana/Poster-Scraper-Bot/{Config.UPSTREAM_BRANCH}/bot/version.py -s && python3 latestversion.py && rm latestversion.py",
                 True,
             )
         )[0]
@@ -133,7 +133,7 @@ async def get_stats(event, key="home"):
         msg = f"""⌬ <b><i>Packages Statistics :</i></b>
 │
 ┟ <b>Python:</b> {ver.get("python", "N/A")}
-┖ <b>PyroTgFork:</b> {ver.get("pyrotgfork", "N/A")}
+┖ <b>WzGram:</b> {ver.get("wzgram", "N/A")}
 """
     elif key == "systasks":
         try:
