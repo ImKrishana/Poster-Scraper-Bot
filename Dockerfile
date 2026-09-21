@@ -1,7 +1,5 @@
 FROM thezake/poster:v1
 
-
-ENV PATH="/zakevenv/bin:$PATH"
 WORKDIR /usr/src/app
 
 COPY requirements.txt .
