@@ -9,12 +9,9 @@ from ..helper.ext_utils.bot_utils import new_task, sync_to_async
 from ..helper.telegram_helper.message_utils import send_message
 from ..helper.telegram_helper.button_build import ButtonMaker
 
-
 BASE_DIRECT = "https://api.themoviedb.org/3"
 BASE_WORKER = "https://tmdbapi.the-zake.workers.dev/3"
-
 IMG = "https://image.tmdb.org/t/p/"
-
 
 def _get_base_and_headers():
     if Config.TMDB_ACCESS_TOKEN:
@@ -255,11 +252,11 @@ async def tmdb(_, message):
         return await send_message(
             message,
             "<b>New ?:</b> "
-            "<code>/tmdb Movie or Series Name</code>\n\n"
+            "<code>/poster Movie or Series Name</code>\n\n"
             "<i>Examples:</i>\n"
-            "<code>/tmdb Avatar</code>\n"
-            "<code>/tmdb Avatar: The Way of Water</code>\n"
-            "<code>/tmdb Avatar 2025</code>",
+            "<code>/poster Avatar</code>\n"
+            "<code>/poster Avatar: The Way of Water</code>\n"
+            "<code>/poster Avatar 2025</code>",
         )
 
     query = " ".join(message.command[1:]).strip()
