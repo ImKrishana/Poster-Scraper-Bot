@@ -41,7 +41,6 @@ start = 0
 state = "view"
 handler_dict = {}
 DEFAULT_VALUES = {
-    "LEECH_SPLIT_SIZE": TgClient.MAX_SPLIT_SIZE,
     "UPSTREAM_BRANCH": "master",
 }
 
@@ -131,8 +130,6 @@ async def edit_variable(_, message, pre_message, key):
         value = True
     elif value.lower() == "false":
         value = False
-    elif key == "LEECH_SPLIT_SIZE":
-        value = min(int(value), TgClient.MAX_SPLIT_SIZE)
     elif key == "BASE_URL_PORT":
         value = int(value)
         if Config.BASE_URL:
@@ -319,7 +316,6 @@ async def edit_bot_settings(client, query):
         OWNER_ONLY_KEYS = {
             "BOT_TOKEN",
             "DATABASE_URL",
-            "HELPER_TOKENS",
             "TELEGRAM_HASH",
             "TELEGRAM_API",
             "UPSTREAM_BRANCH",
