@@ -7,7 +7,7 @@ class Config:
     TELEGRAM_HASH = ""
     BOT_TOKEN = ""
     USER_SESSION_STRING = ""
-    TG_PROXY = None
+    TG_PROXY = None  # {"scheme": ”socks5”, "hostname": ””, "port": 1234, "username": ”user”, "password": ”pass”}
 
     OWNER_ID = 0
     AUTHORIZED_CHATS = ""

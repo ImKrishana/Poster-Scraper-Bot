@@ -32,7 +32,7 @@ class TgClient:
     def wztgClient(cls, *args, proxy=None, **kwargs):
         kwargs["api_id"] = Config.TELEGRAM_API
         kwargs["api_hash"] = Config.TELEGRAM_HASH
-        kwargs["proxy"] = Config.TG_PROXY if proxy is None else proxy
+        kwargs["proxy"] = (Config.TG_PROXY if proxy is None else proxy) or None
         kwargs["parse_mode"] = enums.ParseMode.HTML
         kwargs["in_memory"] = True
         for param, value in {
