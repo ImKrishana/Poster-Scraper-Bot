@@ -33,7 +33,7 @@ PLATFORM_DOMAINS = {
     "mubi": ("mubi.com",),
     "mxplayer": ("mxplayer.in",),
     "nf": ("netflix.com",),
-    "playflix": ("playflix.in",),
+    "playflix": ("playflix.app",),
     "plex": ("plex.tv",),
     "sainaplay": ("sainaplay.com",),
     "shemaroo": ("shemaroome.com", "shemaroo.com"),
