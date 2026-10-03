@@ -1,4 +1,5 @@
 from html import escape
+from json import dumps
 from re import search as re_search
 from urllib.parse import urlparse
 from pyrogram.enums import ButtonStyle 
@@ -18,50 +19,42 @@ def extract_url_from_text(text: str) -> str | None:
     return match.group(0) if match else None
 
 
+def display_label(key: str) -> str:
+    return key.replace("_", " ").strip().title()
+
+
+def format_value(value) -> str:
+    if isinstance(value, (dict, list)):
+        value = dumps(value, ensure_ascii=False)
+    return escape(str(value))
+
+
 def format_result(data: dict, platform: str, url: str) -> str:
-    title = escape(str(data.get("title") or "N/A"))
-    year = escape(str(data.get("year") or "N/A"))
+    metadata = []
+    poster_lines = []
+
+    for key, value in data.items():
+        if value is None or value == "" or key == "platform":
+            continue
+
+        if isinstance(value, str) and value.startswith(("http://", "https://")):
+            poster_lines.append(
+                f'• {display_label(key)}: '
+                f'<a href="{escape(value, quote=True)}">Click Here</a>'
+            )
+            continue
+
+        metadata.append(
+            f"<b>{display_label(key)}:</b> {format_value(value)}"
+        )
 
     header = [
         f"<b>✺ Source:</b> {escape(str(platform))}",
-        f"<b>🎬 Title:</b> {title}",
-        f"<b>📅 Year:</b> {year}",
+        *metadata,
         "",
         "<b>✺ Original URL:</b>",
         f"<code>{escape(url)}</code>",
     ]
-
-    labels = {
-        "landscape": "Landscape",
-        "portrait": "Portrait",
-        "cover": "Cover",
-        "logo": "Logo",
-        "thumbnail": "Thumbnail",
-        "maxres": "Max resolution",
-    }
-
-    poster_lines = []
-
-    for key, label in labels.items():
-        value = data.get(key)
-
-        if isinstance(value, str) and value.startswith(
-            ("http://", "https://")
-        ):
-            poster_lines.append(
-                f'• {label}: '
-                f'<a href="{escape(value, quote=True)}">Click Here</a>'
-            )
-
-    if not poster_lines:
-        for key, value in data.items():
-            if isinstance(value, str) and value.startswith(
-                ("http://", "https://")
-            ):
-                poster_lines.append(
-                    f'• {escape(key.title())}: '
-                    f'<a href="{escape(value, quote=True)}">Click Here</a>'
-                )
 
     return (
         "\n".join(header)
