@@ -1,4 +1,5 @@
 from html import escape
+from json import dumps
 from re import search as re_search
 from urllib.parse import urlparse
 from pyrogram.enums import ButtonStyle 
@@ -11,105 +12,6 @@ from ..helper.telegram_helper.message_utils import send_message
 from ..helper.telegram_helper.button_build import ButtonMaker
 
 
-PLATFORM_DOMAINS = {
-    "aaonxt": ("aaonxt.com",),
-    "addatimes": ("addatimes.com",),
-    "aha": ("aha.video", "ahavideo.com"),
-    "airtel": ("airtelxstream.in", "airtel.tv"),
-    "amazon": ("primevideo.com", "amazon.com"),
-    "apple": ("tv.apple.com",),
-    "atrangii": ("atrangii.com",),
-    "bms": ("bookmyshow.com",),
-    "chaupal": ("chaupal.tv",),
-    "crunchyroll": ("crunchyroll.com",),
-    "dangal": ("dangalplay.com",),
-    "erosnow": ("erosnow.com",),
-    "hoichoi": ("hoichoi.tv", "hoichoi.com"),
-    "hulu": ("hulu.com",),
-    "hungama": ("hungama.com",),
-    "iqyi": ("iq.com", "iqiyi.com"),
-    "jojo": ("jojoapp.in", "jojo.app"),
-    "lionsgate": ("lionsgateplay.com",),
-    "mubi": ("mubi.com",),
-    "mxplayer": ("mxplayer.in",),
-    "nf": ("netflix.com",),
-    "playflix": ("playflix.in",),
-    "plex": ("plex.tv",),
-    "sainaplay": ("sainaplay.com",),
-    "shemaroo": ("shemaroome.com", "shemaroo.com"),
-    "sonyliv": ("sonyliv.com",),
-    "sunnxt": ("sunnxt.com",),
-    "tataplay": ("tataplay.com",),
-    "ticketnew": ("ticketnew.com",),
-    "tubi": ("tubitv.com",),
-    "ultra": ("ultratv.com", "ultraplay.com"),
-    "ultrajhakaas": ("ultrajhakaas.com",),
-    "viki": ("viki.com",),
-    "viu": ("viu.com",),
-    "viva": ("vivamax.net", "vivamax.com"),
-    "wetv": ("wetv.vip",),
-    "youku": ("youku.tv", "youku.com"),
-    "youtube": ("youtube.com", "youtu.be", "youtube-nocookie.com"),
-    "zee5": ("zee5.com",),
-}
-
-
-PLATFORM_NAMES = {
-    "aaonxt": "AAO NXT",
-    "addatimes": "Addatimes",
-    "aha": "Aha Video",
-    "airtel": "Airtel Xstream",
-    "amazon": "Prime Video",
-    "apple": "Apple TV+",
-    "atrangii": "Atrangii",
-    "bms": "BookMyShow",
-    "chaupal": "Chaupal",
-    "crunchyroll": "Crunchyroll",
-    "dangal": "Dangal Play",
-    "erosnow": "Eros Now",
-    "hoichoi": "Hoichoi",
-    "hulu": "Hulu",
-    "hungama": "Hungama",
-    "iqyi": "iQIYI",
-    "jojo": "JOJO",
-    "lionsgate": "Lionsgate Play",
-    "mubi": "MUBI",
-    "mxplayer": "MX Player",
-    "nf": "Netflix",
-    "playflix": "Playflix",
-    "plex": "Plex TV",
-    "sainaplay": "Saina Play",
-    "shemaroo": "ShemarooMe",
-    "sonyliv": "SonyLIV",
-    "sunnxt": "Sun NXT",
-    "tataplay": "Tata Play",
-    "ticketnew": "TicketNew",
-    "tubi": "Tubi",
-    "ultra": "Ultra",
-    "ultrajhakaas": "Ultra Jhakaas",
-    "viki": "Viki",
-    "viu": "Viu",
-    "viva": "Vivamax",
-    "wetv": "WeTV",
-    "youku": "Youku",
-    "youtube": "YouTube",
-    "zee5": "ZEE5",
-}
-
-
-def find_platform(url: str) -> str | None:
-    host = (urlparse(url).hostname or "").lower().removeprefix("www.")
-
-    for platform, domains in PLATFORM_DOMAINS.items():
-        if any(
-            host == domain or host.endswith(f".{domain}")
-            for domain in domains
-        ):
-            return platform
-
-    return None
-
-
 def extract_url_from_text(text: str) -> str | None:
     if not text:
         return None
@@ -117,50 +19,42 @@ def extract_url_from_text(text: str) -> str | None:
     return match.group(0) if match else None
 
 
+def display_label(key: str) -> str:
+    return key.replace("_", " ").strip().title()
+
+
+def format_value(value) -> str:
+    if isinstance(value, (dict, list)):
+        value = dumps(value, ensure_ascii=False)
+    return escape(str(value))
+
+
 def format_result(data: dict, platform: str, url: str) -> str:
-    title = escape(str(data.get("title") or "N/A"))
-    year = escape(str(data.get("year") or "N/A"))
+    metadata = []
+    poster_lines = []
+
+    for key, value in data.items():
+        if value is None or value == "" or key == "platform":
+            continue
+
+        if isinstance(value, str) and value.startswith(("http://", "https://")):
+            poster_lines.append(
+                f'• {display_label(key)}: '
+                f'<a href="{escape(value, quote=True)}">Click Here</a>'
+            )
+            continue
+
+        metadata.append(
+            f"<b>{display_label(key)}:</b> {format_value(value)}"
+        )
 
     header = [
-        f"<b>✺ Source:</b> {PLATFORM_NAMES.get(platform, platform)}",
-        f"<b>🎬 Title:</b> {title}",
-        f"<b>📅 Year:</b> {year}",
+        f"<b>✺ Source:</b> {escape(str(platform))}",
+        *metadata,
         "",
         "<b>✺ Original URL:</b>",
         f"<code>{escape(url)}</code>",
     ]
-
-    labels = {
-        "landscape": "Landscape",
-        "portrait": "Portrait",
-        "cover": "Cover",
-        "logo": "Logo",
-        "thumbnail": "Thumbnail",
-        "maxres": "Max resolution",
-    }
-
-    poster_lines = []
-
-    for key, label in labels.items():
-        value = data.get(key)
-
-        if isinstance(value, str) and value.startswith(
-            ("http://", "https://")
-        ):
-            poster_lines.append(
-                f'• {label}: '
-                f'<a href="{escape(value, quote=True)}">Click Here</a>'
-            )
-
-    if not poster_lines:
-        for key, value in data.items():
-            if isinstance(value, str) and value.startswith(
-                ("http://", "https://")
-            ):
-                poster_lines.append(
-                    f'• {escape(key.title())}: '
-                    f'<a href="{escape(value, quote=True)}">Click Here</a>'
-                )
 
     return (
         "\n".join(header)
@@ -202,18 +96,6 @@ async def poster(_, message):
             "Send a complete http(s) link.",
         )
 
-    platform = find_platform(url)
-
-    if not platform:
-        supported = ", ".join(sorted(PLATFORM_DOMAINS))
-
-        return await send_message(
-            message,
-            "<b>Unsupported platform.</b>\n\n"
-            "Supported Platforms: "
-            + escape(supported),
-        )
-
     api_url = (
         Config.POSTER_API_URL
         or "https://thezakeapi.vercel.app"
@@ -248,7 +130,7 @@ async def poster(_, message):
         ) as client:
 
             response = await client.get(
-                f"{api_url}/posters/{platform}",
+                f"{api_url}/poster",
                 params={"url": url},
                 headers={
                     "Authorization": f"Bearer {token}"
@@ -265,7 +147,7 @@ async def poster(_, message):
         elif response.status_code == 404:
             text = (
                 "<b>Error:</b> "
-                "<code>No poster route found for this platform.</code>"
+                "<code>Unsupported platform or no poster route found.</code>"
             )
 
         elif response.status_code >= 400:
@@ -279,6 +161,7 @@ async def poster(_, message):
             data = response.json()
 
             if isinstance(data, dict):
+                platform = data.get("platform", "unknown")
                 text = format_result(
                     data,
                     platform,
