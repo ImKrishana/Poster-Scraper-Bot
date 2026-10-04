@@ -57,4 +57,3 @@ def get_progress_bar_string(pct):
     p_str = "⬤" * cFull
     p_str += "□" * (12 - cFull)
     return f"[{p_str}]"
-      

@@ -1,6 +1,6 @@
 # ruff: noqa: F403, F405
 
-start = """<b>Gretting(s)</b>: 
+start = """<b>Gretting(s)</b>:
 
 Welcome 🤗"""
 
@@ -10,21 +10,18 @@ BASIC_HELP_DICT = {
 
 def get_bot_commands():
     static_commands = {
-    "Start": "Start the bot",
-    "Poster": "Fetch poster links from OTT(s) URL",
-    "Tmdb": "Fetch movie/TV show posters/info from TMDB",
-    "Stats": "Get bot statistics",
-    "Help": "Detailed help usage",
-    "Ping": "Ping Bot to test Response Speed",
-    "Users": "ADMINS ONLY",
-    "Authorize": "ADMINS ONLY",
-    "UnAuthorize": "ADMINS ONLY",
-    "AddSudo": "ADMINS ONLY",
-    "RmSudo": "ADMINS ONLY",
-    "Broadcast": "ADMINS ONLY",
-    "Log": "ADMINS ONLY",
-    "BotSet": "ADMINS ONLY",
-    "Restart": "ADMINS ONLY",
+    "Start": "• Start the bot",
+    "Poster": "• Fetch poster links from OTT(s) URL",
+    "Bypass": "• Resolve direct links from supported DDL(s) hosts",
+    "Tmdb": "• Fetch movie/TV show posters/info from TMDB",
+    "Imdb": "• Fetch detailed movie/TV information from IMDb",
+    "Anime": "• Search AniList anime (e.g. Attack on Titan or MAL ID mal:5114)",
+    "Character": "• Search AniList characters (e.g. Satoru Gojo)",
+    "Manga": "• Search AniList manga (e.g. Berserk)",
+    "AnimeHelp": "• Show AniList usage with examples",
+    "Stats": "• Get bot statistics",
+    "Help": "• Detailed help usage",
+    "Ping": "• Ping Bot to test Response Speed",
     }
 
     return static_commands.copy()

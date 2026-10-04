@@ -2,8 +2,8 @@ from html import escape
 from json import dumps
 from re import search as re_search
 from urllib.parse import urlparse
-from pyrogram.enums import ButtonStyle 
-from httpx import AsyncClient, HTTPError
+from pyrogram.enums import ButtonStyle
+from niquests import AsyncSession
 
 from .. import LOGGER
 from ..core.config_manager import Config
@@ -124,11 +124,7 @@ async def poster(_, message):
     )
 
     try:
-        async with AsyncClient(
-            timeout=45,
-            follow_redirects=True,
-        ) as client:
-
+        async with AsyncSession(timeout=30) as client:
             response = await client.get(
                 f"{api_url}/poster",
                 params={"url": url},
@@ -173,7 +169,7 @@ async def poster(_, message):
                     "<code>Unexpected API response.</code>"
                 )
 
-    except (HTTPError, ValueError) as error:
+    except ValueError as error:
         LOGGER.error(
             "Poster API request failed: %s",
             error,
