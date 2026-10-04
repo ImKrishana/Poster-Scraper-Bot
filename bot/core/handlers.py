@@ -121,6 +121,14 @@ async def add_handlers():
 
     TgClient.bot.add_handler(
         MessageHandler(
+            bypass,
+            filters=command(BotCommands.BypassCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
             tmdb,
             filters=command(BotCommands.TmdbCommand, case_sensitive=True)
             & CustomFilters.authorized,

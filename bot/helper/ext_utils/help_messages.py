@@ -12,6 +12,7 @@ def get_bot_commands():
     static_commands = {
     "Start": "Start the bot",
     "Poster": "Fetch poster links from OTT(s) URL",
+    "Bypass": "Resolve direct links from supported DDL hosts",
     "Tmdb": "Fetch movie/TV show posters/info from TMDB",
     "Stats": "Get bot statistics",
     "Help": "Detailed help usage",
