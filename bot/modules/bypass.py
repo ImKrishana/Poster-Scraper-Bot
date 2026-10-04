@@ -3,7 +3,7 @@ from json import dumps
 from re import search as re_search
 from urllib.parse import urlparse
 
-from httpx import AsyncClient, HTTPError
+from niquests import AsyncSession
 from pyrogram.enums import ButtonStyle
 
 from .. import LOGGER
@@ -43,7 +43,7 @@ def format_bypass_result(data: dict, url: str) -> str:
 
     details = []
     for key, value in data.items():
-        if key in {"url", "direct_link", "headers"} or value in (None, ""):
+        if key in {"url", "direct_link", "headers", "credits"} or value in (None, ""):
             continue
         details.append(f"<b>{format_label(key)}:</b> {format_value(value)}")
 
@@ -68,7 +68,7 @@ async def bypass(_, message):
         return await send_message(
             message,
             "<b>Usage:</b> <code>/bypass https://example.com/file</code>\n\n"
-            "Send a supported DDL URL after <code>/bypass</code>, "
+            "Send a supported DDL URL after <code>/bypass</code> or <code>/b</code>, "
             "or reply to a message containing a link.",
         )
 
@@ -99,7 +99,7 @@ async def bypass(_, message):
     )
 
     try:
-        async with AsyncClient(timeout=45, follow_redirects=True) as client:
+        async with AsyncSession(timeout=30) as client:
             response = await client.get(
                 f"{api_url}/bypass",
                 params={"url": url},
@@ -122,7 +122,7 @@ async def bypass(_, message):
             else:
                 text = "<b>Error:</b> <code>Unexpected API response.</code>"
 
-    except (HTTPError, ValueError) as error:
+    except ValueError as error:
         LOGGER.error("Bypass API request failed: %s", error)
         text = "<b>Error:</b> <code>Could not resolve the direct link right now.</code>"
     except Exception:
@@ -142,7 +142,6 @@ async def bypass(_, message):
             return await waiting.edit(
                 text=text,
                 reply_markup=buttons.build_menu(2),
-                disable_web_page_preview=False,
             )
         except Exception:
             pass
