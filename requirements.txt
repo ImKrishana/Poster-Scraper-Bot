@@ -6,13 +6,16 @@ fastapi
 gunicorn
 httpx
 imdbinfo
+imdbio
 jinja2
 lxml
+markdown
 motor
 psutil
 pymongo
 python-dotenv
 pytz
+pycountry
 telegraph
 tenacity
 tgcrypto

@@ -43,7 +43,7 @@ async def restart_sessions(_, message):
         "<i>Are you really sure you want to restart the session(s) ?!</>",
         button,
     )
-    
+
 async def restart_notification():
     if await aiopath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
@@ -67,7 +67,7 @@ async def restart_notification():
         except Exception as e:
             LOGGER.error(e)
         await remove(".restartmsg")
-        
+
 @new_task
 async def confirm_restart(_, query):
     await query.answer()
