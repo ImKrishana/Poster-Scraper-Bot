@@ -1,10 +1,9 @@
-import asyncio
 from html import escape
 from json import dumps
 from re import search as re_search
 from urllib.parse import urlparse
 
-import niquests
+from niquests import AsyncSession
 from pyrogram.enums import ButtonStyle
 
 from .. import LOGGER
@@ -100,14 +99,12 @@ async def bypass(_, message):
     )
 
     try:
-        response = await asyncio.to_thread(
-            niquests.get,
-            f"{api_url}/bypass",
-            params={"url": url},
-            headers={"Authorization": f"Bearer {token}"},
-            timeout=30,
-            allow_redirects=True,
-        )
+        async with AsyncSession(timeout=30) as client:
+            response = await client.get(
+                f"{api_url}/bypass",
+                params={"url": url},
+                headers={"Authorization": f"Bearer {token}"},
+            )
 
         if response.status_code == 401:
             text = (
@@ -145,7 +142,6 @@ async def bypass(_, message):
             return await waiting.edit(
                 text=text,
                 reply_markup=buttons.build_menu(2),
-                disable_web_page_preview=True,
             )
         except Exception:
             pass
