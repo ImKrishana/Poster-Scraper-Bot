@@ -137,6 +137,58 @@ async def add_handlers():
 
     TgClient.bot.add_handler(
         MessageHandler(
+            imdb_search,
+            filters=command(BotCommands.ImdbCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
+            anime_command,
+            filters=command(BotCommands.AnimeCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
+            character_command,
+            filters=command(BotCommands.CharacterCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
+            manga_command,
+            filters=command(BotCommands.MangaCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
+            animehelp_command,
+            filters=command(BotCommands.AnimeHelpCommand, case_sensitive=True)
+            & CustomFilters.authorized,
+        )
+    )
+
+    TgClient.bot.add_handler(
+        CallbackQueryHandler(anilist_callback, filters=regex("^anime"))
+    )
+
+    TgClient.bot.add_handler(
+        CallbackQueryHandler(character_callback, filters=regex("^cha"))
+    )
+
+    TgClient.bot.add_handler(
+        CallbackQueryHandler(imdb_callback, filters=regex("^imdb"))
+    )
+
+    TgClient.bot.add_handler(
+        MessageHandler(
             bot_help,
             filters=command(BotCommands.HelpCommand, case_sensitive=True)
             & CustomFilters.authorized,

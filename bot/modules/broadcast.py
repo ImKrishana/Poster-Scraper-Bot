@@ -152,7 +152,6 @@ async def broadcast(_, message):
     elif edited:
         return await edit_broadcast(bc_id, message, rply)
 
-    # Broadcasting logic
     start_time = time()
     status = """⌬  <b><i>Broadcast Stats :</i></b>
 ┠ <b>Total Users:</b> <code>{t}</code>

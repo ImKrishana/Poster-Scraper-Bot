@@ -8,6 +8,11 @@ class BotCommands:
         "Poster": ["ott", "otts"],
         "Bypass": ["bypass", "b"],
         "Tmdb": ["poster", "p", "tmdb"],
+        "Imdb": ["imdb"],
+        "Anime": ["anime", "anilist"],
+        "Character": ["character"],
+        "Manga": ["manga"],
+        "AnimeHelp": ["animehelp"],
         "Help": ["help", "h"],
         "Stats": ["stats", "st"],
         "Log": ["log"],
@@ -21,7 +26,7 @@ class BotCommands:
         "Restart": ["restart", "r", "restartall"],
         "RestartSessions": ["restartses", "rses"],
     }
-    
+
     @classmethod
     def get_commands(cls):
         return cls._static_commands.copy()

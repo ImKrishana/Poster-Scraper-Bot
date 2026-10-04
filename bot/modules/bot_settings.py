@@ -105,7 +105,7 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
             ]
         )
         msg = f"""⌬ <b>Private File Settings</b>
-┠ <b>Dashboard :</b> 
+┠ <b>Dashboard :</b>
 ┃
 ┠ {txt}
 ┃
@@ -121,7 +121,7 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
 async def update_buttons(message, key=None, edit_type=None, edit_mode=False):
     msg, button = await get_buttons(key, edit_type, edit_mode)
     await edit_message(message, msg, button)
-    
+
 @new_task
 async def edit_variable(_, message, pre_message, key):
     handler_dict[message.chat.id] = False

@@ -68,7 +68,7 @@ async def start(_, message):
                 "Activate Access Token", f"start pass {input_token}", "header", style=ButtonStyle.SUCCESS
             )
             reply_markup = buttons.build_menu(2)
-            msg = f"""⌬ Access Login Token : 
+            msg = f"""⌬ Access Login Token :
     │
     ┟ <b>Status</b> → <code>Generated Successfully</code>
     ┟ <b>Access Token</b> → <code>{input_token}</code>
@@ -168,7 +168,7 @@ async def log(_, message):
     buttons.data_button("Web Log", f"log {uid} web", style=ButtonStyle.PRIMARY)
     buttons.data_button("Close", f"log {uid} close", style=ButtonStyle.DANGER)
     await send_file(message, "log.txt", buttons=buttons.build_menu(2))
-    
+
 @new_task
 async def log_cb(_, query):
     data = query.data.split()

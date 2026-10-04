@@ -27,6 +27,7 @@ class Config:
     TIMEZONE = "Asia/Kolkata"
 
     TMDB_ACCESS_TOKEN = ""
+    IMDB_TEMPLATE = ""
     POSTER_API_URL = "https://thezakeapi.vercel.app"
     POSTER_API_TOKEN = "thezake"
 
@@ -36,7 +37,7 @@ class Config:
     UPSTREAM_REPO = "https://github.com/ImKrishana/Poster-Scraper-Bot"
     UPSTREAM_BRANCH = "main"
     UPDATE_PKGS = True
-    
+
     @classmethod
     def get(cls, key):
         return getattr(cls, key) if hasattr(cls, key) else None

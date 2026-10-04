@@ -1,4 +1,4 @@
-**Powerful Telegram bot that fetches posters from TMDB/IMDb and multiple OTT platforms, and bypasses direct links from cloud sites.**
+**Powerful Telegram bot that fetches posters from TMDB, IMDb, AniList, and multiple OTT platforms, and bypasses direct links from cloud sites.**
 
 ## Supported Platforms
 

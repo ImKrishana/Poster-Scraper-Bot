@@ -75,7 +75,6 @@ def _build_command_usage(help_dict, command_key):
 
 def create_help_buttons():
     _build_command_usage(BASIC_HELP_DICT, "basic")
-    # Add more accordingly 
 
 def compare_versions(v1, v2):
     try:
