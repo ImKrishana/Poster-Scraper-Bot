@@ -44,13 +44,9 @@ basicConfig(
 )
 
 LOGGER = getLogger(__name__)
-cpu_no = cpu_count()
-threads = max(1, cpu_no // 2)
-cores = ",".join(str(i) for i in range(threads))
 
 bot_cache = {}
 DOWNLOAD_DIR = "/usr/src/app/downloads/"
-intervals = {"status": {}, "stopAll": False}
 user_data = {}
 shortener_dict = {}
 var_list = [
