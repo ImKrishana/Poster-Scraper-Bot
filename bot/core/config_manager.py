@@ -78,8 +78,6 @@ class Config:
                         continue
                     if isinstance(value, str):
                         value = value.strip()
-                    if attr == "DEFAULT_UPLOAD" and value != "gd":
-                        value = "rc"
                     elif attr == "BASE_URL":
                         try:
                             if value:
@@ -129,9 +127,7 @@ class Config:
     def load_dict(cls, config_dict):
         for key, value in config_dict.items():
             if hasattr(cls, key):
-                if key == "DEFAULT_UPLOAD" and value != "gd":
-                    value = "rc"
-                elif key == "BASE_URL":
+                if key == "BASE_URL":
                     try:
                         if value:
                             value = value.strip("/")
@@ -146,6 +142,3 @@ class Config:
                 value = value.strip()
             if not value:
                 raise ValueError(f"{key} variable is missing!")
-
-class BinConfig:
-    FFMPEG_NAME = "flash"

@@ -8,7 +8,7 @@ from inspect import signature
 from .. import LOGGER, bot_loop
 from .config_manager import Config
 
-_DB_PARTITION_SALT = b"wzmlx_v3_db_partition_salt"
+_DB_PARTITION_SALT = b"thezake_v3_db_partition_salt"
 
 
 def db_partition_id(bot_id):
